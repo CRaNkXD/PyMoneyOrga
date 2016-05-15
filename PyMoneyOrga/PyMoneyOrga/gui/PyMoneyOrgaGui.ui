@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>659</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,88 +30,76 @@
      <attribute name="title">
       <string>Organize Expenses</string>
      </attribute>
-     <widget class="QPushButton" name="buttonAddExpenses">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>new expenses</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="inputAddExpenses">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>70</y>
-        <width>113</width>
-        <height>20</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelAddExpenses">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>50</y>
-        <width>51</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>expenses</string>
-      </property>
-      <property name="buddy">
-       <cstring>inputAddExpenses</cstring>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboChooseAccount">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>20</y>
-        <width>69</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>NoAccountSaved</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="labelChooseAccount">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>0</y>
-        <width>81</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>choose account</string>
-      </property>
-      <property name="buddy">
-       <cstring>comboChooseAccount</cstring>
-      </property>
-     </widget>
-     <widget class="QTableView" name="tableViewAccounts">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
+        <x>10</x>
         <y>10</y>
-        <width>256</width>
-        <height>192</height>
+        <width>480</width>
+        <height>251</height>
        </rect>
       </property>
-      <property name="showGrid">
-       <bool>true</bool>
-      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="buttonAddExpenses">
+         <property name="text">
+          <string>new expenses</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="labelAddExpenses">
+         <property name="text">
+          <string>expenses</string>
+         </property>
+         <property name="buddy">
+          <cstring>inputAddExpenses</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="comboChooseAccount">
+         <item>
+          <property name="text">
+           <string>NoAccountSaved</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="inputAddExpenses"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="labelChooseAccount">
+         <property name="text">
+          <string>choose account</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboChooseAccount</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2" rowspan="6">
+        <widget class="QTableView" name="tableViewAccounts">
+         <property name="showGrid">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -121,7 +109,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>659</width>
      <height>21</height>
     </rect>
    </property>

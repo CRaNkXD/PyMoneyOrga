@@ -37,6 +37,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
+    <Compile Include="PyMoneyOrga\gui\mainWindowCreateNewAccount.py" />
     <Compile Include="PyMoneyOrga\gui\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -54,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PyMoneyOrga\gui\dialogCreateNewAccount.ui" />
+    <Content Include="PyMoneyOrga\gui\mainWindowCreateNewAccount.ui" />
     <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
   </ItemGroup>
   <PropertyGroup>
