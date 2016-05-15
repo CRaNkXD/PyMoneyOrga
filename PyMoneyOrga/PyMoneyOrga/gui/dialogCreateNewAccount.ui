@@ -2,125 +2,106 @@
 <ui version="4.0">
  <class>dialogCreateNewAccount</class>
  <widget class="QDialog" name="dialogCreateNewAccount">
-  <property name="enabled">
-   <bool>true</bool>
-  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>172</height>
+    <width>478</width>
+    <height>336</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>170</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>CreateNewAccount</string>
+   <string>Create New Account</string>
   </property>
-  <property name="sizeGripEnabled">
-   <bool>false</bool>
-  </property>
-  <property name="modal">
-   <bool>false</bool>
-  </property>
-  <widget class="QWidget" name="">
+  <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>361</width>
-     <height>131</height>
+     <x>30</x>
+     <y>240</y>
+     <width>341</width>
+     <height>32</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetNoConstraint</enum>
-    </property>
-    <item>
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetNoConstraint</enum>
-      </property>
-      <item row="0" column="1">
-       <widget class="QLabel" name="labelAccountName">
-        <property name="text">
-         <string>Account name</string>
-        </property>
-        <property name="buddy">
-         <cstring>inputAccountName</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="inputAccountName"/>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="labelFirstAmount">
-        <property name="text">
-         <string>Starting amount of money</string>
-        </property>
-        <property name="buddy">
-         <cstring>inputInitialAmount</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="buttonAddNewAccount">
-        <property name="text">
-         <string>Add new account</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="inputInitialAmount"/>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QDialogButtonBox" name="buttonBox">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Close</set>
+   </property>
   </widget>
-  <zorder>buttonBox</zorder>
-  <zorder>labelAccountName</zorder>
-  <zorder>buttonAddNewAccount</zorder>
-  <zorder>inputAccountName</zorder>
-  <zorder>inputInitialAmount</zorder>
-  <zorder>labelFirstAmount</zorder>
-  <zorder>buttonBox</zorder>
-  <zorder>buttonBox</zorder>
-  <zorder>buttonBox</zorder>
-  <zorder>buttonAddNewAccount</zorder>
-  <zorder>inputAccountName</zorder>
-  <zorder>labelAccountName</zorder>
-  <zorder>inputInitialAmount</zorder>
-  <zorder>labelFirstAmount</zorder>
+  <widget class="QLineEdit" name="inputAccountName">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>113</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelAccountName">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>72</y>
+     <width>200</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Account name</string>
+   </property>
+   <property name="buddy">
+    <cstring>inputAccountName</cstring>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inputInitialAmount">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>180</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelFirstAmount">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>139</y>
+     <width>200</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Starting amount of money</string>
+   </property>
+   <property name="buddy">
+    <cstring>inputInitialAmount</cstring>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonAddNewAccount">
+   <property name="geometry">
+    <rect>
+     <x>44</x>
+     <y>179</y>
+     <width>200</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Add new account</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
-   <signal>accepted()</signal>
+   <signal>clicked(QAbstractButton*)</signal>
    <receiver>dialogCreateNewAccount</receiver>
-   <slot>accept()</slot>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>248</x>
@@ -128,22 +109,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>dialogCreateNewAccount</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
      <y>274</y>
     </hint>
    </hints>

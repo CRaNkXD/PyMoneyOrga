@@ -7,11 +7,14 @@ from .database import Database
 
 
 class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
-    def __init__(self, dialogCreateNewAccount, parent):
+    def __init__(self, parent):
         super().__init__(parent=parent)
-        self.setupUi(dialogCreateNewAccount)
+        self.setupUi(self)
         # Connect add button with a custom function (addAcc)
         self.buttonAddNewAccount.clicked.connect(self.addAcc)
+
+    def closeEvent(self, event):
+        self.parent().dialogCreateNewAccount = None
 
     def addAcc(self):
         sAccName = str(self.inputAccountName.text())
@@ -43,10 +46,10 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
 
 		# Connect menu button with a custom function (addAcc)
         self.actionCreate_New_Account.triggered.connect(self.openDialogCreatNewAccount)
-    
+        
         
     def openDialogCreatNewAccount(self):
-        wDialogCreateNewAccount = QtWidgets.QDialog()
-        self.dialogCreateNewAccount = DialogCreatNewAccount(wDialogCreateNewAccount, self)
-        self.dialogCreateNewAccount.show()
+        if self.dialogCreateNewAccount is None:
+            self.dialogCreateNewAccount = DialogCreatNewAccount(self)
+            self.dialogCreateNewAccount.show()
      
