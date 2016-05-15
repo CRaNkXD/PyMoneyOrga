@@ -27,6 +27,8 @@ class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         itemCash.setEditable(False)
         row = [itemAccName,itemCash]
         self.parent().model.appendRow(row)
+        for account in self.parent().cDatabase.acAllAccs:
+            print(self.parent().cDatabase.acAllAccs[account].sAccName + '; ' + self.parent().cDatabase.acAllAccs[account].iCash)
 
 class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     """implementation of the PyMoneyOrga Gui"""
