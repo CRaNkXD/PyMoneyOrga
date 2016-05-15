@@ -26,80 +26,85 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tabOrganizeAccounts">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Organize Expenses</string>
      </attribute>
-     <widget class="QLineEdit" name="firstAmount">
+     <widget class="QPushButton" name="buttonAddExpenses">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>130</y>
-        <width>113</width>
-        <height>20</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="accountName">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>90</y>
-        <width>113</width>
-        <height>20</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="addNewAccount">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>130</y>
-        <width>111</width>
+        <x>20</x>
+        <y>70</y>
+        <width>91</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>Add new account</string>
+       <string>new expenses</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelAccountName">
+     <widget class="QLineEdit" name="inputAddExpenses">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>120</x>
         <y>70</y>
-        <width>101</width>
+        <width>113</width>
         <height>20</height>
        </rect>
-      </property>
-      <property name="text">
-       <string>Account name</string>
-      </property>
-      <property name="buddy">
-       <cstring>accountName</cstring>
       </property>
      </widget>
-     <widget class="QLabel" name="labelFirstAmount">
+     <widget class="QLabel" name="labelAddExpenses">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>110</y>
-        <width>131</width>
-        <height>20</height>
+        <x>120</x>
+        <y>50</y>
+        <width>51</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Starting amount of money</string>
+       <string>expenses</string>
       </property>
       <property name="buddy">
-       <cstring>firstAmount</cstring>
+       <cstring>inputAddExpenses</cstring>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboChooseAccount">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>20</y>
+        <width>69</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>NoAccountSaved</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="labelChooseAccount">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>0</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>choose account</string>
+      </property>
+      <property name="buddy">
+       <cstring>comboChooseAccount</cstring>
       </property>
      </widget>
      <widget class="QTableView" name="tableViewAccounts">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>20</y>
+        <x>520</x>
+        <y>10</y>
         <width>256</width>
         <height>192</height>
        </rect>
@@ -108,11 +113,6 @@
        <bool>true</bool>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
     </widget>
    </widget>
   </widget>
@@ -125,8 +125,20 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionCreate_New_Account"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionCreate_New_Account">
+   <property name="text">
+    <string>Create New Account</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -36,6 +36,10 @@
     <Compile Include="PyMoneyOrga\database_mysql.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PyMoneyOrga\gui\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PyMoneyOrga\gui\PyMoneyOrgaGui.py" />
     <Compile Include="PyMoneyOrga\user_interface.py">
       <SubType>Code</SubType>
     </Compile>
@@ -44,7 +48,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PyMoneyOrga\gui\" />
     <Folder Include="PyMoneyOrga\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

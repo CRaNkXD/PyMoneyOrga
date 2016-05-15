@@ -1,0 +1,1 @@
+pyuic5 -x PyMoneyOrgaGui.ui -o PyMoneyOrgaGui.py

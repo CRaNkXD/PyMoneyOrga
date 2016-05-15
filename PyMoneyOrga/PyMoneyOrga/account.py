@@ -1,4 +1,3 @@
-from PyMoneyOrga.database import Database
 
 class Account(object):
     """Saves the amount of cash in an account"""
