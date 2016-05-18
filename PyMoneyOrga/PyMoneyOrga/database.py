@@ -8,7 +8,7 @@ class Database(object):
         self.acAllAccs = {}
 
 
-    def save_value(self, sAccName, iValue):
+    def saveValue(self, sAccName, iValue):
         pass
 
     def addAcc(self, Account):

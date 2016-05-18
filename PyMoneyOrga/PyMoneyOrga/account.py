@@ -7,11 +7,15 @@ class Account(object):
         self.iCash = iCash
         
     
-    def add_cash(self, iAmount):
+    def addCash(self, iAmount):
         self.iCash += iAmount
 
-    def get_cash(self):
+    def addExpenses(self, iAmount):
+        self.iCash -= iAmount
+        print(self.iCash)
+
+    def getCash(self):
         return self.iCash
 
-    def get_name(self):
+    def getName(self):
         return self.sAccName
