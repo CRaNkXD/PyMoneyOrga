@@ -12,10 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>PyMoneyOrga</Name>
     <RootNamespace>PyMoneyOrga</RootNamespace>
-    <InterpreterId>
-    </InterpreterId>
-    <InterpreterVersion>
-    </InterpreterVersion>
+    <InterpreterId>MSBuild|venv_pyqt5|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +34,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
-    <Compile Include="PyMoneyOrga\gui\mainWindowCreateNewAccount.py" />
     <Compile Include="PyMoneyOrga\gui\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -48,22 +44,33 @@
     <Compile Include="PyMoneyOrga\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="test\test_account.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="test\" />
     <Folder Include="PyMoneyOrga\gui\" />
     <Folder Include="PyMoneyOrga\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="PyMoneyOrga\gui\dialogCreateNewAccount.ui" />
-    <Content Include="PyMoneyOrga\gui\mainWindowCreateNewAccount.ui" />
     <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="venv_pyqt5\">
+      <Id>venv_pyqt5</Id>
+      <Version>3.7</Version>
+      <Description>venv_pyqt5 (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
@@ -72,4 +79,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
