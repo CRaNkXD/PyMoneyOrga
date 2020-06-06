@@ -13,6 +13,7 @@
     <Name>PyMoneyOrga</Name>
     <RootNamespace>PyMoneyOrga</RootNamespace>
     <InterpreterId>MSBuild|venv_pyqt5|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
