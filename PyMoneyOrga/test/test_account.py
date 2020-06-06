@@ -6,8 +6,9 @@ class Test_account(unittest.TestCase):
         self.daniels_account = Account("Daniel",100)
         return super().setUp()
 
-    def test_addCash(self):
-        self.daniels_account.addCash(100)
-        self.assertEqual()
+    def test_add_cash_in_euro(self):
+        self.daniels_account.add_cash_in_euro(100)
+        self.assertEqual(self.daniels_account.cash_in_euro,200)
+
 if __name__ == '__main__':
     unittest.main()

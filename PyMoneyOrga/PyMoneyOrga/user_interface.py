@@ -38,9 +38,9 @@ class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
 class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     """implementation of the PyMoneyOrga Gui"""
     
-    def __init__(self, PyMoneyOrgaGui, cDatabase, parent=None):
+    def __init__(self, cDatabase, parent=None):
         super().__init__(parent)
-        self.setupUi(PyMoneyOrgaGui)
+        self.setupUi(self)
         self.modelTableViewAccounts = QtGui.QStandardItemModel()
         self.modelTableViewAccounts.setColumnCount(2)
         headerNames = []

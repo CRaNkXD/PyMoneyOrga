@@ -8,9 +8,8 @@ from PyMoneyOrga.user_interface import UserInterface
 if __name__ == '__main__':
     cDatabase = Database("sFileName")
     app = QtWidgets.QApplication(sys.argv)
-    PyMoneyOrgaGui = QtWidgets.QMainWindow()
     
-    prog = UserInterface(PyMoneyOrgaGui,cDatabase)
+    prog = UserInterface(cDatabase)
 
-    PyMoneyOrgaGui.show()
+    prog.show()
     sys.exit(app.exec_())
