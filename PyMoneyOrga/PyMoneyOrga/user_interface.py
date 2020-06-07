@@ -7,14 +7,15 @@ from .database import Database
 
 
 class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
-    def __init__(self, parent):
-        super().__init__(parent=parent)
+    """implementation of the dialogCreateNewAccount Gui"""
+    def __init__(self, parent=None):
+        super(DialogCreatNewAccount, self).__init__(parent)
         self.setupUi(self)
         # Connect add button with a custom function (addAcc)
         self.buttonAddNewAccount.clicked.connect(self.add_acc)
 
-    def close_event(self, event):
-        self.parent().dialogCreateNewAccount = None
+    def closeEvent(self, event):
+        self.parent().dialog_create_new_acc = None
 
     def add_acc(self):
         acc_name = str(self.inputAccountName.text())
@@ -41,7 +42,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     """implementation of the PyMoneyOrga Gui"""
     
     def __init__(self, database, parent=None):
-        super().__init__(parent)
+        super(UserInterface, self).__init__(parent)
         self.setupUi(self)
         self.model_table_view_accounts = QtGui.QStandardItemModel()
         self.model_table_view_accounts.setColumnCount(2)
