@@ -1,6 +1,8 @@
+from .database.database_sqlite import Database_sqlite
+
 
 class Account(object):
-    """Saves the amount of cash in an account"""
+    """ Combines a name with a balance value """
 
     def __init__(self, acc_name, balance):
         self._acc_name = acc_name

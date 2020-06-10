@@ -1,12 +1,12 @@
 ﻿import sys
 from PyMoneyOrga.account import Account
-from PyMoneyOrga.database.database import Database
+from PyMoneyOrga.database.database_sqlite import Database_sqlite
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyMoneyOrga.user_interface import UserInterface
 
 
 if __name__ == '__main__':
-    database = Database("pymoneyorga.sqlite")
+    database = Database_sqlite("pymoneyorga.sqlite")
     app = QtWidgets.QApplication(sys.argv)
     
     prog = UserInterface(database)
