@@ -28,12 +28,10 @@
     <Compile Include="PyMoneyOrga\account.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PyMoneyOrga\database.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PyMoneyOrga\database_mysql.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="PyMoneyOrga\database\database.py" />
+    <Compile Include="PyMoneyOrga\database\database_mysql.py" />
+    <Compile Include="PyMoneyOrga\database\database_sqlite.py" />
+    <Compile Include="PyMoneyOrga\database\__init__.py" />
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
     <Compile Include="PyMoneyOrga\gui\__init__.py">
       <SubType>Code</SubType>
@@ -50,11 +48,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PyMoneyOrga\database\" />
+    <Folder Include="PyMoneyOrga\database\__pycache__\" />
     <Folder Include="test\" />
     <Folder Include="PyMoneyOrga\gui\" />
     <Folder Include="PyMoneyOrga\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PyMoneyOrga\database\__pycache__\database.cpython-37.pyc" />
+    <Content Include="PyMoneyOrga\database\__pycache__\__init__.cpython-37.pyc" />
     <Content Include="PyMoneyOrga\gui\dialogCreateNewAccount.ui" />
     <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
   </ItemGroup>
