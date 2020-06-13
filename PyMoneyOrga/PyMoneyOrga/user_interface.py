@@ -22,8 +22,7 @@ class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
     def add_acc(self):
         acc_name = str(self.inputAccountName.text())
         balance = int(self.inputInitialAmount.text())
-        new_acc = Account(acc_name, balance)
-        self.parent().database.add_acc(new_acc)
+        self.parent().database.add_acc(acc_name, balance)
         
         item_acc_name = QtGui.QStandardItem(acc_name)
         item_acc_name.setEditable(False)
@@ -33,8 +32,6 @@ class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         self.parent().model_table_view_accounts.appendRow(row)
         self.parent().buttonAddExpenses.setEnabled(True)
 
-        for account in self.parent().database.dict_all_acc.values():
-            print(account)
 
         # delete the initial combo box item and add a new one for the account 
         if self.parent().comboChooseAccount.currentText() == "NoAccountSaved":
@@ -63,16 +60,36 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         # Connect new expenses button with a custom function (addNewExpenses)
         self.buttonAddExpenses.clicked.connect(self.add_new_expenses)
 
-        if not self.database.dict_all_acc:
+        accs_dict = self.init_gui_with_database()
+
+        if not accs_dict:
             self.buttonAddExpenses.setEnabled(False)
             
     
-    def update_table_view_accounts(self):
+    def init_gui_with_database(self):
+        accs_dict = self.database.get_all_acc()
+        if accs_dict != {}:
+            self.comboChooseAccount.removeItem(int(0))
+
+        for acc_name, balance in accs_dict.items():
+            self.comboChooseAccount.addItem(acc_name)
+            item_acc_name = QtGui.QStandardItem(acc_name)
+            item_acc_name.setEditable(False)
+            item_balance = QtGui.QStandardItem(str(balance))
+            item_balance.setEditable(False)
+            row = [item_acc_name,item_balance]
+            self.model_table_view_accounts.appendRow(row)
+
+        return accs_dict
+
+
+    def update_table_view_accounts_specific(self, acc_name, balance):
         for row in range(self.model_table_view_accounts.rowCount()):
             index_acc_name = self.model_table_view_accounts.index(row, 0)
-            acc_name = self.model_table_view_accounts.data(index_acc_name)
-            index_balance = self.model_table_view_accounts.index(row, 1)
-            self.model_table_view_accounts.setData(index_balance, self.database.dict_all_acc[acc_name].balance)
+            local_acc_name = self.model_table_view_accounts.data(index_acc_name)
+            if acc_name == local_acc_name:
+                index_balance = self.model_table_view_accounts.index(row, 1)
+                self.model_table_view_accounts.setData(index_balance, balance)
 
             
     def open_dialog_creat_new_acc(self):
@@ -84,6 +101,9 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def add_new_expenses(self):
         acc_name = self.comboChooseAccount.currentText()
         expenses = int(self.inputAddExpenses.text()) if self.inputAddExpenses.text() != '' else 0
-        self.database.dict_all_acc[acc_name].add_expenses(expenses)
-        self.update_table_view_accounts()
+        acc = self.database.get_acc(acc_name)
+        acc = Account(acc_name,acc[acc_name])
+        acc.add_expenses(expenses)
+        self.database.update_acc_balance(acc_name, acc.balance)
+        self.update_table_view_accounts_specific(acc_name, acc.balance)
     

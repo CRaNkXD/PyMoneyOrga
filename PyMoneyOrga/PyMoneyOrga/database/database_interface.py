@@ -8,6 +8,12 @@ class Database_interface(ABC):
     
     
     @abstractmethod
+    def get_all_acc(self):
+        """returns a dictionary {acc_name:balance} of all saved accounts from the database"""
+        pass
+
+
+    @abstractmethod
     def add_acc(self, acc_name, balance):
         """add an account to the the account table and commit to database"""
         pass
@@ -15,13 +21,13 @@ class Database_interface(ABC):
 
     @abstractmethod
     def get_acc(self, acc_name):
-        """get an account from the database"""
+        """returns an account from the database with the name acc_name"""
         pass
 
 
     @abstractmethod
     def update_acc_balance(self, acc_name, new_balance):
-        """get an account from the database"""
+        """update the balance of an account in the database"""
         pass
 
 
