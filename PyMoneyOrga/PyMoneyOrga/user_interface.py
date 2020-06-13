@@ -3,7 +3,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .gui.dialogCreateNewAccount import Ui_dialogCreateNewAccount
 from .account import Account
-from .database.database_sqlite import Database_sqlite
 
 
 class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):

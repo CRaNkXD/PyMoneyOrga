@@ -6,7 +6,7 @@ from PyMoneyOrga.user_interface import UserInterface
 
 
 if __name__ == '__main__':
-    database = Database_sqlite("pymoneyorga.sqlite")
+    database = Database_sqlite(url = "sqlite:///pymoneyorga.sqlite")
     app = QtWidgets.QApplication(sys.argv)
     
     prog = UserInterface(database)

@@ -28,6 +28,7 @@
     <Compile Include="PyMoneyOrga\account.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PyMoneyOrga\database\database_interface.py" />
     <Compile Include="PyMoneyOrga\database\database.py" />
     <Compile Include="PyMoneyOrga\database\database_mysql.py" />
     <Compile Include="PyMoneyOrga\database\database_sqlite.py" />
