@@ -105,5 +105,6 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         acc = Account(acc_name,acc[acc_name])
         acc.add_expenses(expenses)
         self.database.update_acc_balance(acc_name, acc.balance)
+        self.database.add_transaction(acc_name, expenses, acc.balance)
         self.update_table_view_accounts_specific(acc_name, acc.balance)
     

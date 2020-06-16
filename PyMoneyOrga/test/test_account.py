@@ -6,13 +6,16 @@ class Test_account(unittest.TestCase):
         self.daniels_account = Account("Daniel",100)
         return super().setUp()
 
-    def test_add_cash_in_euro(self):
-        self.daniels_account.add_cash(100)
-        self.assertEqual(self.daniels_account.cash_in_euro,200)
 
-    def test_add_expenses_in_euro(self):
+    def test_add_cash(self):
+        self.daniels_account.add_cash(100)
+        self.assertEqual(self.daniels_account.balance,200)
+
+
+    def test_add_expenses(self):
         self.daniels_account.add_expenses(50)
-        self.assertEqual(self.daniels_account.cash_in_euro,50)
+        self.assertEqual(self.daniels_account.balance,50)
+
 
     def test_acc_name(self):
         self.assertEqual(self.daniels_account.acc_name,"Daniel")

@@ -36,5 +36,10 @@ class Database_interface(ABC):
         """add a transaction to the the transaction table and commit to database"""
         pass
 
+    @abstractmethod
+    def add_transaction(self, acc_name, amount, new_balance):
+        """add a transaction to the transaction table and commit to database"""
+        pass
+
 
 

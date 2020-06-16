@@ -1,10 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy import Column
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, DateTime
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
+import datetime
 
 from .database_interface import Database_interface
 
@@ -25,6 +27,7 @@ class Transactions(Base):
     account_id = Column(Integer, ForeignKey('accounts.id'))
     amount = Column(Integer, nullable=False)
     new_balance = Column(Integer, nullable=False)
+    time_stamp = Column(DateTime, nullable=False)
 
     account = relationship("Accounts", back_populates="transactions")
 
@@ -45,6 +48,13 @@ class Database_sqlite(Database_interface):
         self.Session = sessionmaker(bind=engine)
 
 
+    def _clear_all_tables(self):
+        session = self.Session()
+        engine = session.get_bind()
+        Base.metadata.drop_all(engine)
+        Base.metadata.create_all(engine)
+
+
     def get_all_acc(self):
         """returns a dictionary {acc_name:balance} of all saved accounts from the database"""
         accs_dict = {}
@@ -56,6 +66,17 @@ class Database_sqlite(Database_interface):
         session.close()
         return accs_dict
 
+
+    def get_all_transaction(self, acc_name):
+        """returns a list [transactions] of all trnsactions for specified account from the database"""
+        transactions = []
+        session = self.Session()
+        acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
+        transactions = acc.transactions
+        session.close()
+        return transactions
+
+
     def add_acc(self, acc_name, balance):
         """add an account to the the account table and commit to database"""
         session = self.Session()
@@ -65,10 +86,12 @@ class Database_sqlite(Database_interface):
 
 
     def get_acc(self, acc_name):
-        """get an account from the database"""
+        """returns a dictionary {acc_name:balance} from the database. if not existing {acc_name:None}"""
         session = self.Session()
-        acc = session.query(Accounts).filter_by(acc_name=acc_name).first() 
+        acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
         session.close()
+        if acc is None:
+            return {acc_name: None}
         return {acc.acc_name: acc.balance}
 
 
@@ -82,8 +105,9 @@ class Database_sqlite(Database_interface):
 
 
     def add_transaction(self, acc_name, amount, new_balance):
-        """add a transaction to the the transaction table and commit to database"""
+        """add a transaction to the transaction table and commit to database"""
         session = self.Session()
-        session.add(Transactions(acc_name=acc_name,amount=amount,new_balance=new_balance))
+        acc = session.query(Accounts).filter_by(acc_name=acc_name).first() 
+        session.add(Transactions(account_id=acc.id, amount=amount, new_balance=new_balance, time_stamp=datetime.datetime.now() ))
         session.commit()
         session.close()
