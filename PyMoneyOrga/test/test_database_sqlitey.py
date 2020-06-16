@@ -30,6 +30,13 @@ class Test_account(unittest.TestCase):
         self.assertEqual(acc["Daniel"],None)
 
 
+    def test_get_transactions_none(self):
+        """ tests if get transactions returns an empty list [] if the specified account does have no transactions """
+        self.database.add_acc("Daniel",100)
+        transactions = self.database.get_all_transaction("Daniel")
+        print(transactions)
+
+
     def test_add_transactions_first(self):
         """ tests if a second transaction can be set by checking table columns of the first entry """
         self.database.add_acc("Daniel",100)

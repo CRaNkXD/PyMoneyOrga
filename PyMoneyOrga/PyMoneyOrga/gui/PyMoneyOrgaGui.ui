@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
-    <height>444</height>
+    <width>1100</width>
+    <height>645</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>721</width>
-      <height>381</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1101</width>
+      <height>611</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -38,8 +38,8 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>611</width>
-           <height>321</height>
+           <width>1071</width>
+           <height>571</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
@@ -113,7 +113,7 @@
            </widget>
           </item>
           <item row="0" column="3" rowspan="7">
-           <widget class="QTableWidget" name="tableViewTransactions"/>
+           <widget class="QTableWidget" name="tableWidgetTransactions"/>
           </item>
          </layout>
         </widget>
@@ -128,7 +128,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>966</width>
+     <width>1100</width>
      <height>21</height>
     </rect>
    </property>

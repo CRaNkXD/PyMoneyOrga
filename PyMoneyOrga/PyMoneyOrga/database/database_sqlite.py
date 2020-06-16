@@ -72,6 +72,9 @@ class Database_sqlite(Database_interface):
         transactions = []
         session = self.Session()
         acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
+        if acc is None:
+            return []
+
         transactions = acc.transactions
         session.close()
         return transactions
