@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'dialogCreateNewAccount.ui'
 #
-# Created by: PyQt5 UI code generator 5.4.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_dialogCreateNewAccount(object):
     def setupUi(self, dialogCreateNewAccount):
@@ -45,4 +47,3 @@ class Ui_dialogCreateNewAccount(object):
         self.labelAccountName.setText(_translate("dialogCreateNewAccount", "Account name"))
         self.labelFirstAmount.setText(_translate("dialogCreateNewAccount", "Starting amount of money"))
         self.buttonAddNewAccount.setText(_translate("dialogCreateNewAccount", "Add new account"))
-
