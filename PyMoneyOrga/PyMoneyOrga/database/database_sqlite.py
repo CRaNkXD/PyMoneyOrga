@@ -60,6 +60,10 @@ class Database_sqlite(Database_interface):
         accs_dict = {}
         session = self.Session()
         accs = session.query(Accounts).all()
+        if accs is None:
+            session.close()
+            return {}
+
         for acc in accs:
             accs_dict[acc.acc_name] = acc.balance
 
@@ -80,6 +84,23 @@ class Database_sqlite(Database_interface):
         return transactions
 
 
+    def get_transaction(self, acc_name, time_stamp):
+        """returns a transaction from the database"""
+        transactions = []
+        session = self.Session()
+        acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
+        if acc is None:
+            session.close()
+            return None
+
+        for transaction in acc.transactions:
+            if transaction.time_stamp == time_stamp:
+                session.close()
+                return transaction
+        
+        return None
+
+
     def add_acc(self, acc_name, balance):
         """add an account to the the account table and commit to database"""
         session = self.Session()
@@ -94,6 +115,7 @@ class Database_sqlite(Database_interface):
         acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
         session.close()
         if acc is None:
+            session.close()
             return {acc_name: None}
         return {acc.acc_name: acc.balance}
 
@@ -102,15 +124,26 @@ class Database_sqlite(Database_interface):
         """get an account from the database"""
         session = self.Session()
         acc = session.query(Accounts).filter_by(acc_name=acc_name).first()
-        acc.balance = new_balance
-        session.commit()
-        session.close()
+        if acc is None:
+            session.close()
+            # raise exception
+        else:
+            acc.balance = new_balance
+            session.commit()
+            session.close()
 
 
     def add_transaction(self, acc_name, amount, new_balance):
-        """add a transaction to the transaction table and commit to database"""
+        """add a transaction to the transaction table and commit to database return the time stamp used to save the tran"""
         session = self.Session()
         acc = session.query(Accounts).filter_by(acc_name=acc_name).first() 
-        session.add(Transactions(account_id=acc.id, amount=amount, new_balance=new_balance, time_stamp=datetime.datetime.now() ))
-        session.commit()
-        session.close()
+        if acc is None:
+            session.close()
+            # raise exception
+            return None
+        else:
+            time_stamp = datetime.datetime.now()
+            session.add(Transactions(account_id=acc.id, amount=amount, new_balance=new_balance, time_stamp=time_stamp ))
+            session.commit()
+            session.close()
+            return time_stamp
