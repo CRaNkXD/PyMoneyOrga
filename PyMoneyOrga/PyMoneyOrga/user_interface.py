@@ -24,13 +24,13 @@ class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         balance = int(self.inputInitialAmount.text())
         self.parent().database.add_acc(acc_name, balance)
         
-        item_acc_name = QtGui.QStandardItem(acc_name)
-        item_acc_name.setEditable(False)
-        item_balance = QtGui.QStandardItem(str(balance))
-        item_balance.setEditable(False)
-        row = [item_acc_name,item_balance]
-        self.parent().model_table_view_accounts.appendRow(row)
-        self.parent().buttonAddExpenses.setEnabled(True)
+        currentRowCount = self.parent().tableWidgetAccounts.rowCount() + 1
+        self.parent().tableWidgetAccounts.setRowCount(currentRowCount)
+        
+        item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
+        self.parent().tableWidgetAccounts.setItem(currentRowCount - 1, 0, item_acc_name)
+        item_balance = QtWidgets.QTableWidgetItem(str(balance))
+        self.parent().tableWidgetAccounts.setItem(currentRowCount - 1, 1, item_balance)
 
 
         # delete the initial combo box item and add a new one for the account 
@@ -44,28 +44,31 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def __init__(self, database, parent=None):
         super(UserInterface, self).__init__(parent)
         self.setupUi(self)
-        self.model_table_view_accounts = QtGui.QStandardItemModel()
-        self.model_table_view_accounts.setColumnCount(2)
-        header_names_accounts = []
-        header_names_accounts.append("Account")
-        header_names_accounts.append("Balance")
-        self.model_table_view_accounts.setHorizontalHeaderLabels(header_names_accounts)
-        self.tableViewAccounts.setModel(self.model_table_view_accounts)
+        #self.model_table_view_accounts = QtGui.QStandardItemModel()
+        #self.model_table_view_accounts.setColumnCount(2)
+        #header_names_accounts = []
+        #header_names_accounts.append("Account")
+        #header_names_accounts.append("Balance")
+        #self.model_table_view_accounts.setHorizontalHeaderLabels(header_names_accounts)
+        #self.tableViewAccounts.setModel(self.model_table_view_accounts)
 
-        header_names_transactions = []
-        header_names_transactions.append("Time stamp")
-        header_names_transactions.append("Amount")
-        header_names_transactions.append("New balance")
-        self.tableWidgetTransactions.setColumnCount(len(header_names_transactions))
-        self.tableWidgetTransactions.setHorizontalHeaderLabels(header_names_transactions)
+        #header_names_transactions = []
+        #header_names_transactions.append("Time stamp")
+        #header_names_transactions.append("Amount")
+        #header_names_transactions.append("New balance")
+        #self.tableWidgetTransactions.setColumnCount(len(header_names_transactions))
+        #self.tableWidgetTransactions.setHorizontalHeaderLabels(header_names_transactions)
         # set the cells in the table widget to read only
         self.tableWidgetTransactions.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidgetAccounts.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
 
         self.database = database
         self.dialog_create_new_acc = None
 
 		# Connect menu button with a custom function (openDialogCreatNewAccount)
         self.actionCreate_New_Account.triggered.connect(self.open_dialog_creat_new_acc)
+
+        self.actionExit.triggered.connect(self.close)
 
         # Connect new expenses button with a custom function (addNewExpenses)
         self.buttonAddExpenses.clicked.connect(self.add_new_expenses)
@@ -86,7 +89,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         if accs_dict != {}:
             self.comboChooseAccount.removeItem(int(0))
 
-        self.init_table_view_accounts()
+        self.init_table_accounts()
         self.init_table_transactions()
         return accs_dict
 
@@ -124,27 +127,32 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 2, item_new_balance)
 
 
-    def init_table_view_accounts(self):
+    def init_table_accounts(self):
         accs_dict = self.database.get_all_acc()
-        for acc_name, balance in accs_dict.items():
-            self.comboChooseAccount.addItem(acc_name)
-            item_acc_name = QtGui.QStandardItem(acc_name)
-            item_acc_name.setEditable(False)
-            item_balance = QtGui.QStandardItem(str(balance))
-            item_balance.setEditable(False)
-            row = [item_acc_name,item_balance]
-            self.model_table_view_accounts.appendRow(row)
+        if accs_dict != {}:
+            self.tableWidgetAccounts.setRowCount(len(accs_dict))
+            currentRowCount = 0
+            for acc_name, balance in accs_dict.items():
+                self.comboChooseAccount.addItem(acc_name)
+                item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
+                self.tableWidgetAccounts.setItem(currentRowCount, 0, item_acc_name)
+                item_balance = QtWidgets.QTableWidgetItem(str(balance))
+                self.tableWidgetAccounts.setItem(currentRowCount, 1, item_balance)
+                currentRowCount += 1
+
+        else:
+            self.tableWidgetAccounts.setRowCount(0)
 
 
-    def update_table_view_accounts_balance(self, acc_name, balance):
-        for row in range(self.model_table_view_accounts.rowCount()):
-            index_acc_name = self.model_table_view_accounts.index(row, 0)
-            local_acc_name = self.model_table_view_accounts.data(index_acc_name)
+    def update_table_accounts_balance(self, acc_name, balance):
+        for row in range(self.tableWidgetAccounts.rowCount()):
+            item_acc_name = self.tableWidgetAccounts.item(row, 0)
+            local_acc_name = item_acc_name.text()
             if acc_name == local_acc_name:
-                index_balance = self.model_table_view_accounts.index(row, 1)
-                self.model_table_view_accounts.setData(index_balance, balance)
+                item_balance = self.tableWidgetAccounts.item(row, 1)
+                item_balance.setText(str(balance))
 
-            
+     
     def open_dialog_creat_new_acc(self):
         if self.dialog_create_new_acc is None:
             self.dialog_create_new_acc = DialogCreatNewAccount(self)
@@ -159,7 +167,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         acc.add_expenses(expenses)
         self.database.update_acc_balance(acc_name, acc.balance)
         time_stamp = self.database.add_transaction(acc_name, -expenses, acc.balance)
-        self.update_table_view_accounts_balance(acc_name, acc.balance)
+        self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)
 
 
@@ -171,5 +179,5 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         acc.add_cash(income)
         self.database.update_acc_balance(acc_name, acc.balance)
         time_stamp = self.database.add_transaction(acc_name, income, acc.balance)
-        self.update_table_view_accounts_balance(acc_name, acc.balance)
+        self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)

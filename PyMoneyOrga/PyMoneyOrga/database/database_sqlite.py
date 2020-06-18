@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy import Column
-from sqlalchemy import Integer, String, DateTime
+from sqlalchemy import Integer, BigInteger, String, DateTime
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
@@ -16,7 +16,7 @@ class Accounts(Base):
     __tablename__ = "accounts"
     id = Column(Integer, primary_key=True)
     acc_name = Column(String, nullable=False)
-    balance = Column(Integer, nullable=False)
+    balance = Column(BigInteger, nullable=False)
 
     transactions = relationship("Transactions", back_populates="account", cascade="all, delete-orphan")
 
@@ -25,8 +25,8 @@ class Transactions(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True)
     account_id = Column(Integer, ForeignKey('accounts.id'))
-    amount = Column(Integer, nullable=False)
-    new_balance = Column(Integer, nullable=False)
+    amount = Column(BigInteger, nullable=False)
+    new_balance = Column(BigInteger, nullable=False)
     time_stamp = Column(DateTime, nullable=False)
 
     account = relationship("Accounts", back_populates="transactions")
