@@ -75,6 +75,8 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
                 self.tableWidgetTransactions.setItem(currentRowCount, 1, item_amount)
                 item_new_balance = QtWidgets.QTableWidgetItem(str(transaction.new_balance))
                 self.tableWidgetTransactions.setItem(currentRowCount, 2, item_new_balance)
+                item_description = QtWidgets.QTableWidgetItem(str(transaction.description))
+                self.tableWidgetTransactions.setItem(currentRowCount, 3, item_description)
                 currentRowCount += 1
         else:
             self.tableWidgetTransactions.setRowCount(0)
@@ -93,6 +95,8 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 1, item_amount)
             item_new_balance = QtWidgets.QTableWidgetItem(str(transaction.new_balance))
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 2, item_new_balance)
+            item_description = QtWidgets.QTableWidgetItem(str(transaction.description))
+            self.tableWidgetTransactions.setItem(currentRowCount - 1, 3, item_description)
 
 
     def init_table_accounts(self, accs_dict):
@@ -135,11 +139,12 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def add_new_expenses(self):
         acc_name = self.comboChooseAccount.currentText()
         expenses = int(self.inputAddExpenses.text()) if self.inputAddExpenses.text() != '' else 0
+        description = self.inputDescriptionExpenses.text() if self.inputDescriptionExpenses.text() != '' else "expense"
         acc = self.database.get_acc(acc_name)
         acc = Account(acc_name,acc[acc_name])
         acc.add_expenses(expenses)
         self.database.update_acc_balance(acc_name, acc.balance)
-        time_stamp = self.database.add_transaction(acc_name, -expenses, acc.balance)
+        time_stamp = self.database.add_transaction(acc_name, -expenses, acc.balance, description)
         self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)
 
@@ -147,10 +152,11 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def add_new_income(self):
         acc_name = self.comboChooseAccount.currentText()
         income = int(self.inputAddIncome.text()) if self.inputAddIncome.text() != '' else 0
+        description = self.inputDescriptionIncome.text() if self.inputDescriptionIncome.text() != '' else "income"
         acc = self.database.get_acc(acc_name)
         acc = Account(acc_name,acc[acc_name])
         acc.add_income(income)
         self.database.update_acc_balance(acc_name, acc.balance)
-        time_stamp = self.database.add_transaction(acc_name, income, acc.balance)
+        time_stamp = self.database.add_transaction(acc_name, income, acc.balance, description)
         self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)

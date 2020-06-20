@@ -144,7 +144,7 @@ class Database_sqlite(Database_interface):
             session.close()
 
 
-    def add_transaction(self, acc_name, amount, new_balance):
+    def add_transaction(self, acc_name, amount, new_balance, description):
         """add a transaction to the transaction table and commit to database return the time stamp used to save the tran"""
         session = self.Session()
         acc = session.query(Account).filter_by(acc_name=acc_name).first() 
@@ -154,7 +154,7 @@ class Database_sqlite(Database_interface):
             return None
         else:
             time_stamp = datetime.datetime.now()
-            session.add(Transaction(account_id=acc.id, amount=amount, new_balance=new_balance, time_stamp=time_stamp ))
+            session.add(Transaction(account_id=acc.id, amount=amount, new_balance=new_balance, time_stamp=time_stamp, description=description))
             session.commit()
             session.close()
             return time_stamp
