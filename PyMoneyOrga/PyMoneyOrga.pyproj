@@ -30,7 +30,6 @@
     </Compile>
     <Compile Include="PyMoneyOrga\database\database_interface.py" />
     <Compile Include="PyMoneyOrga\database\database.py" />
-    <Compile Include="PyMoneyOrga\database\database_mysql.py" />
     <Compile Include="PyMoneyOrga\database\database_sqlite.py" />
     <Compile Include="PyMoneyOrga\database\__init__.py" />
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
