@@ -28,6 +28,7 @@ class Transaction(Base):
     amount = Column(BigInteger, nullable=False)
     new_balance = Column(BigInteger, nullable=False)
     time_stamp = Column(DateTime, nullable=False)
+    description = Column(String)
 
     #account = relationship("Account", back_populates="transactions", cascade="all, delete")
 

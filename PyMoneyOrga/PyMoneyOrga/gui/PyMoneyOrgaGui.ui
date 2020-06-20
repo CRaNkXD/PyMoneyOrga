@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1192</width>
-    <height>747</height>
+    <width>1218</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,155 +26,161 @@
    <string>PyMoneyOrga</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout_8">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QTabWidget" name="tabWidget">
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="10" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>400</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="checkBox_3">
+          <property name="text">
+           <string>Amount</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboChooseAccount">
+          <item>
+           <property name="text">
+            <string>NoAccountSaved</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QCheckBox" name="checkBox">
+          <property name="text">
+           <string>New balance</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="inputAddExpenses"/>
+          </item>
+         </layout>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>What to show in transaction table</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="buttonAddIncome">
+          <property name="text">
+           <string>New income</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Description</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelAddExpenses">
+            <property name="text">
+             <string>Amount</string>
+            </property>
+            <property name="buddy">
+             <cstring>inputAddExpenses</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="buttonAddExpenses">
+          <property name="text">
+           <string>New expenses</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="text">
+           <string>Time stamp</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_2"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="inputAddIncome"/>
+          </item>
+         </layout>
+        </item>
+        <item row="9" column="1">
+         <widget class="QCheckBox" name="checkBox_4">
+          <property name="text">
+           <string>Description</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelChooseAccount">
+          <property name="text">
+           <string>Choose account</string>
+          </property>
+          <property name="buddy">
+           <cstring>comboChooseAccount</cstring>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <widget class="QTabWidget" name="tabWidget_2">
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="tabOrganizeAccounts">
+        <widget class="QWidget" name="tab">
          <attribute name="title">
-          <string>Organize Expenses</string>
+          <string>Table view</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_4">
+         <layout class="QGridLayout" name="gridLayout_10">
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout">
-            <item row="6" column="1">
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>500</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="labelAddExpenses">
-              <property name="text">
-               <string>Amount</string>
-              </property>
-              <property name="buddy">
-               <cstring>inputAddExpenses</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QPushButton" name="buttonAddExpenses">
-              <property name="text">
-               <string>New expenses</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2" rowspan="7">
-             <widget class="QTableWidget" name="tableWidgetAccounts">
-              <property name="showGrid">
-               <bool>true</bool>
-              </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
-              </property>
-              <attribute name="horizontalHeaderCascadingSectionResizes">
-               <bool>false</bool>
-              </attribute>
-              <attribute name="horizontalHeaderMinimumSectionSize">
-               <number>100</number>
-              </attribute>
-              <attribute name="horizontalHeaderDefaultSectionSize">
-               <number>149</number>
-              </attribute>
-              <attribute name="horizontalHeaderStretchLastSection">
-               <bool>true</bool>
-              </attribute>
-              <column>
-               <property name="text">
-                <string>Account</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Balance</string>
-               </property>
-              </column>
-             </widget>
-            </item>
-            <item row="7" column="3">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>450</width>
-                <height>5</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="5" column="0">
-             <widget class="QPushButton" name="buttonAddIncome">
-              <property name="text">
-               <string>New income</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="2">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>300</width>
-                <height>5</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLineEdit" name="inputAddExpenses"/>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLineEdit" name="inputAddIncome"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="labelChooseAccount">
-              <property name="text">
-               <string>Choose account</string>
-              </property>
-              <property name="buddy">
-               <cstring>comboChooseAccount</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="comboChooseAccount">
-              <item>
-               <property name="text">
-                <string>NoAccountSaved</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>300</width>
-                <height>5</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="3" rowspan="7">
+            <item row="0" column="2" rowspan="3">
              <widget class="QTableWidget" name="tableWidgetTransactions">
               <property name="sortingEnabled">
                <bool>true</bool>
@@ -211,9 +217,72 @@
               </column>
              </widget>
             </item>
+            <item row="0" column="1" rowspan="3">
+             <widget class="QTableWidget" name="tableWidgetAccounts">
+              <property name="showGrid">
+               <bool>true</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderMinimumSectionSize">
+               <number>100</number>
+              </attribute>
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>149</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Account</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Balance</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>450</width>
+                <height>13</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="3" column="1">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>350</width>
+                <height>13</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </item>
          </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Graphical view</string>
+         </attribute>
         </widget>
        </widget>
       </item>
@@ -226,7 +295,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1192</width>
+     <width>1218</width>
      <height>21</height>
     </rect>
    </property>
@@ -263,12 +332,6 @@
   </action>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>comboChooseAccount</tabstop>
-  <tabstop>buttonAddExpenses</tabstop>
-  <tabstop>inputAddExpenses</tabstop>
-  <tabstop>buttonAddIncome</tabstop>
-  <tabstop>inputAddIncome</tabstop>
   <tabstop>tableWidgetAccounts</tabstop>
   <tabstop>tableWidgetTransactions</tabstop>
  </tabstops>
