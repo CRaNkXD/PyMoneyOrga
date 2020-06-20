@@ -34,6 +34,7 @@
     <Compile Include="PyMoneyOrga\database\database_sqlite.py" />
     <Compile Include="PyMoneyOrga\database\__init__.py" />
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
+    <Compile Include="PyMoneyOrga\gui\dialogDeleteAccount.py" />
     <Compile Include="PyMoneyOrga\gui\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +61,7 @@
     <Content Include="PyMoneyOrga\database\__pycache__\database.cpython-37.pyc" />
     <Content Include="PyMoneyOrga\database\__pycache__\__init__.cpython-37.pyc" />
     <Content Include="PyMoneyOrga\gui\dialogCreateNewAccount.ui" />
+    <Content Include="PyMoneyOrga\gui\dialogDeleteAccount.ui" />
     <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
   </ItemGroup>
   <ItemGroup>

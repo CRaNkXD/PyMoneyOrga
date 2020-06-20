@@ -17,13 +17,13 @@ class Account(object):
         return f"Account Name: {self._acc_name}; Money in Account: {self._balance} €"
 
 
-    def add_cash(self, amount_in_euro):
-        self._balance += amount_in_euro
+    def add_income(self, amount):
+        self._balance += amount
 
 
-    def add_expenses(self, amount_in_euro):
-        self._balance -= amount_in_euro
-        print(self._balance)
+    def add_expenses(self, amount):
+        self._balance -= amount
+
     
 
     @property

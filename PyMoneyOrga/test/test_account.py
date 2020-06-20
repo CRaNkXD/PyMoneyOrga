@@ -8,7 +8,7 @@ class Test_account(unittest.TestCase):
 
 
     def test_add_cash(self):
-        self.daniels_account.add_cash(100)
+        self.daniels_account.add_income(100)
         self.assertEqual(self.daniels_account.balance,200)
 
 
