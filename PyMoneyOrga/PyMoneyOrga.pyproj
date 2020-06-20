@@ -32,6 +32,10 @@
     <Compile Include="PyMoneyOrga\database\database.py" />
     <Compile Include="PyMoneyOrga\database\database_sqlite.py" />
     <Compile Include="PyMoneyOrga\database\__init__.py" />
+    <Compile Include="PyMoneyOrga\dialogs\dialogCreateNewAccount.py" />
+    <Compile Include="PyMoneyOrga\dialogs\dialogDeleteAccount.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PyMoneyOrga\gui\dialogCreateNewAccount.py" />
     <Compile Include="PyMoneyOrga\gui\dialogDeleteAccount.py" />
     <Compile Include="PyMoneyOrga\gui\__init__.py">
@@ -52,6 +56,7 @@
   <ItemGroup>
     <Folder Include="PyMoneyOrga\database\" />
     <Folder Include="PyMoneyOrga\database\__pycache__\" />
+    <Folder Include="PyMoneyOrga\dialogs\" />
     <Folder Include="test\" />
     <Folder Include="PyMoneyOrga\gui\" />
     <Folder Include="PyMoneyOrga\" />

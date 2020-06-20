@@ -1,95 +1,10 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
-from .gui.dialogCreateNewAccount import Ui_dialogCreateNewAccount
-from .gui.dialogDeleteAccount import Ui_dialogDeleteAccount
+from .dialogs.dialogDeleteAccount import DialogDeleteAccount
+from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount
+
 from .account import Account
-
-
-
-class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
-    """implementation of the dialogCreateNewAccount Gui"""
-    
-    def __init__(self, parent=None):
-        super(DialogDeleteAccount, self).__init__(parent)
-        self.setupUi(self)
-        self.parent = parent
-
-        # Connect add button with a custom function 
-        self.buttonDeleteAccount.clicked.connect(self.delete_acc)
-        self.buttonCancel.clicked.connect(self.close)
-
-        # delete the initial combo box item and copy the items from the main window
-        if self.parent.comboChooseAccount.count() > 1 or self.parent.comboChooseAccount.currentText() != "NoAccountSaved":
-            self.comboChooseAccount.removeItem(0)
-            for i in range(self.parent.comboChooseAccount.count()):
-                text = self.parent.comboChooseAccount.itemText(i)
-                self.comboChooseAccount.addItem(text)
-
-
-    def closeEvent(self, event):
-        self.parent.dialog_delete_acc = None
-
-
-    def delete_acc(self):
-        acc_name = self.comboChooseAccount.currentText()
-        if acc_name == "NoAccountSaved":
-            # add open an popup stating there are no accounts to delete
-            return
-        self.parent.database.delete_account_table(acc_name)
-        self.parent.init_gui_with_database()
-        for i in range(self.comboChooseAccount.count()):
-            if self.comboChooseAccount.itemText(i) == acc_name:
-                self.comboChooseAccount.removeItem(i)
-
-        if self.comboChooseAccount.count() == 0:
-            self.comboChooseAccount.addItem("NoAccountSaved")
-
-
-class DialogCreatNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
-    """implementation of the dialogCreateNewAccount Gui"""
-    
-    def __init__(self, parent=None):
-        super(DialogCreatNewAccount, self).__init__(parent)
-        self.setupUi(self)
-        self.parent = parent
-
-        # Connect add button with a custom function (addAcc)
-        self.buttonAddNewAccount.clicked.connect(self.add_acc)
-
-
-    def closeEvent(self, event):
-        self.parent.dialog_create_new_acc = None
-        
-
-    def add_acc(self):
-        acc_name = str(self.inputAccountName.text())
-        if acc_name == "":
-            # add popup stating the acc name is missing
-            return
-        balance = self.inputInitialAmount.text()
-        if balance == "":
-            # add popup stating the initial balance is missing
-            return
-        balance = int(balance)
-        self.parent.database.add_acc(acc_name, balance)
-        
-        currentRowCount = self.parent.tableWidgetAccounts.rowCount() + 1
-        self.parent.tableWidgetAccounts.setRowCount(currentRowCount)
-        
-        item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
-        self.parent.tableWidgetAccounts.setItem(currentRowCount - 1, 0, item_acc_name)
-        item_balance = QtWidgets.QTableWidgetItem(str(balance))
-        self.parent.tableWidgetAccounts.setItem(currentRowCount - 1, 1, item_balance)
-
-        # delete the initial combo box item and add a new one for the account 
-        if self.parent.comboChooseAccount.currentText() == "NoAccountSaved":
-            self.parent.comboChooseAccount.removeItem(int(0))
-        self.parent.comboChooseAccount.addItem(acc_name)
-
-        self.parent.buttonAddExpenses.setEnabled(True)
-        self.parent.buttonAddIncome.setEnabled(True)
-        
 
 
 class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
@@ -106,7 +21,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.dialog_create_new_acc = None
         self.dialog_delete_acc = None
 
-		# Connect menu button with a custom function (openDialogCreatNewAccount)
+		# Connect menu button with a custom function (openDialogCreateNewAccount)
         self.actionCreate_New_Account.triggered.connect(self.open_dialog_create_new_acc)
 
         # Connect menu button with a custom function (openDialogDeleteAccount)
@@ -207,7 +122,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
      
     def open_dialog_create_new_acc(self):
         if self.dialog_create_new_acc is None:
-            self.dialog_create_new_acc = DialogCreatNewAccount(self)
+            self.dialog_create_new_acc = DialogCreateNewAccount(self)
             self.dialog_create_new_acc.show()
 
 
