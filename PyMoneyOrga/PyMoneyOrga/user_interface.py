@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .dialogs.dialogDeleteAccount import DialogDeleteAccount
 from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount

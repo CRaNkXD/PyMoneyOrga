@@ -12,7 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>PyMoneyOrga</Name>
     <RootNamespace>PyMoneyOrga</RootNamespace>
-    <InterpreterId>MSBuild|venv_pyqt5|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|venv_pyside|$(MSBuildProjectFullPath)</InterpreterId>
     <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -73,6 +73,15 @@
       <Id>venv_pyqt5</Id>
       <Version>3.7</Version>
       <Description>venv_pyqt5 (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+    <Interpreter Include="venv_pyside\">
+      <Id>venv_pyside</Id>
+      <Version>3.7</Version>
+      <Description>venv_pyside (Python 3.7 (64-bit))</Description>
       <InterpreterPath>Scripts\python.exe</InterpreterPath>
       <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>

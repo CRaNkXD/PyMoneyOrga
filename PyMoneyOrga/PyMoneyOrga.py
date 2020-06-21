@@ -1,7 +1,7 @@
 ﻿import sys
 from PyMoneyOrga.account import Account
 from PyMoneyOrga.database.database_sqlite import Database_sqlite
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 from PyMoneyOrga.user_interface import UserInterface
 
 

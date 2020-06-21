@@ -1,49 +1,61 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dialogCreateNewAccount.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.2
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'dialogCreateNewAccount.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.0
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
+    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
+    QPixmap, QRadialGradient)
+from PySide2.QtWidgets import *
 
 
 class Ui_dialogCreateNewAccount(object):
     def setupUi(self, dialogCreateNewAccount):
-        dialogCreateNewAccount.setObjectName("dialogCreateNewAccount")
+        if not dialogCreateNewAccount.objectName():
+            dialogCreateNewAccount.setObjectName(u"dialogCreateNewAccount")
         dialogCreateNewAccount.resize(478, 336)
-        self.buttonBox = QtWidgets.QDialogButtonBox(dialogCreateNewAccount)
-        self.buttonBox.setGeometry(QtCore.QRect(30, 240, 341, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Close)
-        self.buttonBox.setObjectName("buttonBox")
-        self.inputAccountName = QtWidgets.QLineEdit(dialogCreateNewAccount)
-        self.inputAccountName.setGeometry(QtCore.QRect(250, 113, 200, 20))
-        self.inputAccountName.setObjectName("inputAccountName")
-        self.labelAccountName = QtWidgets.QLabel(dialogCreateNewAccount)
-        self.labelAccountName.setGeometry(QtCore.QRect(250, 72, 200, 35))
-        self.labelAccountName.setObjectName("labelAccountName")
-        self.inputInitialAmount = QtWidgets.QLineEdit(dialogCreateNewAccount)
-        self.inputInitialAmount.setGeometry(QtCore.QRect(250, 180, 200, 20))
-        self.inputInitialAmount.setObjectName("inputInitialAmount")
-        self.labelFirstAmount = QtWidgets.QLabel(dialogCreateNewAccount)
-        self.labelFirstAmount.setGeometry(QtCore.QRect(250, 139, 200, 34))
-        self.labelFirstAmount.setObjectName("labelFirstAmount")
-        self.buttonAddNewAccount = QtWidgets.QPushButton(dialogCreateNewAccount)
-        self.buttonAddNewAccount.setGeometry(QtCore.QRect(44, 179, 200, 23))
-        self.buttonAddNewAccount.setObjectName("buttonAddNewAccount")
+        self.buttonBox = QDialogButtonBox(dialogCreateNewAccount)
+        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setGeometry(QRect(30, 240, 341, 32))
+        self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
+        self.inputAccountName = QLineEdit(dialogCreateNewAccount)
+        self.inputAccountName.setObjectName(u"inputAccountName")
+        self.inputAccountName.setGeometry(QRect(250, 113, 200, 20))
+        self.labelAccountName = QLabel(dialogCreateNewAccount)
+        self.labelAccountName.setObjectName(u"labelAccountName")
+        self.labelAccountName.setGeometry(QRect(250, 72, 200, 35))
+        self.inputInitialAmount = QLineEdit(dialogCreateNewAccount)
+        self.inputInitialAmount.setObjectName(u"inputInitialAmount")
+        self.inputInitialAmount.setGeometry(QRect(250, 180, 200, 20))
+        self.labelFirstAmount = QLabel(dialogCreateNewAccount)
+        self.labelFirstAmount.setObjectName(u"labelFirstAmount")
+        self.labelFirstAmount.setGeometry(QRect(250, 139, 200, 34))
+        self.buttonAddNewAccount = QPushButton(dialogCreateNewAccount)
+        self.buttonAddNewAccount.setObjectName(u"buttonAddNewAccount")
+        self.buttonAddNewAccount.setGeometry(QRect(44, 179, 200, 23))
+#if QT_CONFIG(shortcut)
         self.labelAccountName.setBuddy(self.inputAccountName)
         self.labelFirstAmount.setBuddy(self.inputInitialAmount)
+#endif // QT_CONFIG(shortcut)
 
         self.retranslateUi(dialogCreateNewAccount)
-        self.buttonBox.clicked['QAbstractButton*'].connect(dialogCreateNewAccount.close)
-        QtCore.QMetaObject.connectSlotsByName(dialogCreateNewAccount)
+        self.buttonBox.clicked.connect(dialogCreateNewAccount.close)
+
+        QMetaObject.connectSlotsByName(dialogCreateNewAccount)
+    # setupUi
 
     def retranslateUi(self, dialogCreateNewAccount):
-        _translate = QtCore.QCoreApplication.translate
-        dialogCreateNewAccount.setWindowTitle(_translate("dialogCreateNewAccount", "Create New Account"))
-        self.labelAccountName.setText(_translate("dialogCreateNewAccount", "Account name"))
-        self.labelFirstAmount.setText(_translate("dialogCreateNewAccount", "Starting amount of money"))
-        self.buttonAddNewAccount.setText(_translate("dialogCreateNewAccount", "Add new account"))
+        dialogCreateNewAccount.setWindowTitle(QCoreApplication.translate("dialogCreateNewAccount", u"Create New Account", None))
+        self.labelAccountName.setText(QCoreApplication.translate("dialogCreateNewAccount", u"Account name", None))
+        self.labelFirstAmount.setText(QCoreApplication.translate("dialogCreateNewAccount", u"Starting amount of money", None))
+        self.buttonAddNewAccount.setText(QCoreApplication.translate("dialogCreateNewAccount", u"Add new account", None))
+    # retranslateUi
+

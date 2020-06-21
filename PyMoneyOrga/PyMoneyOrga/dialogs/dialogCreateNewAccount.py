@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtGui, QtWidgets
 
 from ..gui.dialogCreateNewAccount import Ui_dialogCreateNewAccount
 

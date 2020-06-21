@@ -1,202 +1,274 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'PyMoneyOrgaGui.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.2
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'PyMoneyOrgaGui.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.0
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
+    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
+    QPixmap, QRadialGradient)
+from PySide2.QtWidgets import *
 
 
 class Ui_PyMoneyOrgaGui(object):
     def setupUi(self, PyMoneyOrgaGui):
-        PyMoneyOrgaGui.setObjectName("PyMoneyOrgaGui")
+        if not PyMoneyOrgaGui.objectName():
+            PyMoneyOrgaGui.setObjectName(u"PyMoneyOrgaGui")
         PyMoneyOrgaGui.resize(1218, 725)
-        PyMoneyOrgaGui.setMinimumSize(QtCore.QSize(0, 0))
-        PyMoneyOrgaGui.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.centralwidget = QtWidgets.QWidget(PyMoneyOrgaGui)
-        self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout_8 = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout_8.setObjectName("gridLayout_8")
-        self.gridLayout_9 = QtWidgets.QGridLayout()
-        self.gridLayout_9.setObjectName("gridLayout_9")
-        self.gridLayout_2 = QtWidgets.QGridLayout()
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        spacerItem = QtWidgets.QSpacerItem(20, 400, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem, 10, 1, 1, 1)
-        self.checkShowAmount = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkShowAmount.setObjectName("checkShowAmount")
+        PyMoneyOrgaGui.setMinimumSize(QSize(0, 0))
+        PyMoneyOrgaGui.setMaximumSize(QSize(16777215, 16777215))
+        self.actionCreate_New_Account = QAction(PyMoneyOrgaGui)
+        self.actionCreate_New_Account.setObjectName(u"actionCreate_New_Account")
+        self.actionDeleteAccount = QAction(PyMoneyOrgaGui)
+        self.actionDeleteAccount.setObjectName(u"actionDeleteAccount")
+        self.actionDelete_Account = QAction(PyMoneyOrgaGui)
+        self.actionDelete_Account.setObjectName(u"actionDelete_Account")
+        self.actionExit = QAction(PyMoneyOrgaGui)
+        self.actionExit.setObjectName(u"actionExit")
+        self.centralwidget = QWidget(PyMoneyOrgaGui)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.gridLayout_8 = QGridLayout(self.centralwidget)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.gridLayout_9 = QGridLayout()
+        self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.gridLayout_2 = QGridLayout()
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.verticalSpacer = QSpacerItem(20, 400, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 10, 1, 1, 1)
+
+        self.checkShowAmount = QCheckBox(self.centralwidget)
+        self.checkShowAmount.setObjectName(u"checkShowAmount")
+
         self.gridLayout_2.addWidget(self.checkShowAmount, 7, 1, 1, 1)
-        self.comboChooseAccount = QtWidgets.QComboBox(self.centralwidget)
-        self.comboChooseAccount.setObjectName("comboChooseAccount")
+
+        self.comboChooseAccount = QComboBox(self.centralwidget)
         self.comboChooseAccount.addItem("")
+        self.comboChooseAccount.setObjectName(u"comboChooseAccount")
+
         self.gridLayout_2.addWidget(self.comboChooseAccount, 0, 1, 1, 1)
-        self.checkShowNewBalance = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkShowNewBalance.setObjectName("checkShowNewBalance")
+
+        self.checkShowNewBalance = QCheckBox(self.centralwidget)
+        self.checkShowNewBalance.setObjectName(u"checkShowNewBalance")
+
         self.gridLayout_2.addWidget(self.checkShowNewBalance, 8, 1, 1, 1)
-        self.gridLayout_4 = QtWidgets.QGridLayout()
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.inputDescriptionEpenses = QtWidgets.QLineEdit(self.centralwidget)
-        self.inputDescriptionEpenses.setObjectName("inputDescriptionEpenses")
+
+        self.gridLayout_4 = QGridLayout()
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.inputDescriptionEpenses = QLineEdit(self.centralwidget)
+        self.inputDescriptionEpenses.setObjectName(u"inputDescriptionEpenses")
+
         self.gridLayout_4.addWidget(self.inputDescriptionEpenses, 0, 1, 1, 1)
-        self.inputAddExpenses = QtWidgets.QLineEdit(self.centralwidget)
-        self.inputAddExpenses.setObjectName("inputAddExpenses")
+
+        self.inputAddExpenses = QLineEdit(self.centralwidget)
+        self.inputAddExpenses.setObjectName(u"inputAddExpenses")
+
         self.gridLayout_4.addWidget(self.inputAddExpenses, 0, 0, 1, 1)
+
+
         self.gridLayout_2.addLayout(self.gridLayout_4, 2, 1, 1, 1)
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setObjectName("label")
+
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+
         self.gridLayout_2.addWidget(self.label, 5, 1, 1, 1)
-        self.buttonAddIncome = QtWidgets.QPushButton(self.centralwidget)
-        self.buttonAddIncome.setObjectName("buttonAddIncome")
+
+        self.buttonAddIncome = QPushButton(self.centralwidget)
+        self.buttonAddIncome.setObjectName(u"buttonAddIncome")
+
         self.gridLayout_2.addWidget(self.buttonAddIncome, 3, 0, 1, 1)
-        self.gridLayout_7 = QtWidgets.QGridLayout()
-        self.gridLayout_7.setObjectName("gridLayout_7")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setObjectName("label_2")
+
+        self.gridLayout_7 = QGridLayout()
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.label_2 = QLabel(self.centralwidget)
+        self.label_2.setObjectName(u"label_2")
+
         self.gridLayout_7.addWidget(self.label_2, 0, 1, 1, 1)
-        self.labelAddExpenses = QtWidgets.QLabel(self.centralwidget)
-        self.labelAddExpenses.setObjectName("labelAddExpenses")
+
+        self.labelAddExpenses = QLabel(self.centralwidget)
+        self.labelAddExpenses.setObjectName(u"labelAddExpenses")
+
         self.gridLayout_7.addWidget(self.labelAddExpenses, 0, 0, 1, 1)
+
+
         self.gridLayout_2.addLayout(self.gridLayout_7, 1, 1, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem1, 4, 1, 1, 1)
-        self.buttonAddExpenses = QtWidgets.QPushButton(self.centralwidget)
-        self.buttonAddExpenses.setObjectName("buttonAddExpenses")
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer_2, 4, 1, 1, 1)
+
+        self.buttonAddExpenses = QPushButton(self.centralwidget)
+        self.buttonAddExpenses.setObjectName(u"buttonAddExpenses")
+
         self.gridLayout_2.addWidget(self.buttonAddExpenses, 2, 0, 1, 1)
-        self.checkShowTimeStamp = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkShowTimeStamp.setObjectName("checkShowTimeStamp")
+
+        self.checkShowTimeStamp = QCheckBox(self.centralwidget)
+        self.checkShowTimeStamp.setObjectName(u"checkShowTimeStamp")
+
         self.gridLayout_2.addWidget(self.checkShowTimeStamp, 6, 1, 1, 1)
-        self.gridLayout_6 = QtWidgets.QGridLayout()
-        self.gridLayout_6.setObjectName("gridLayout_6")
-        self.inputDescriptionIncome = QtWidgets.QLineEdit(self.centralwidget)
-        self.inputDescriptionIncome.setObjectName("inputDescriptionIncome")
+
+        self.gridLayout_6 = QGridLayout()
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.inputDescriptionIncome = QLineEdit(self.centralwidget)
+        self.inputDescriptionIncome.setObjectName(u"inputDescriptionIncome")
+
         self.gridLayout_6.addWidget(self.inputDescriptionIncome, 0, 1, 1, 1)
-        self.inputAddIncome = QtWidgets.QLineEdit(self.centralwidget)
-        self.inputAddIncome.setObjectName("inputAddIncome")
+
+        self.inputAddIncome = QLineEdit(self.centralwidget)
+        self.inputAddIncome.setObjectName(u"inputAddIncome")
+
         self.gridLayout_6.addWidget(self.inputAddIncome, 0, 0, 1, 1)
+
+
         self.gridLayout_2.addLayout(self.gridLayout_6, 3, 1, 1, 1)
-        self.checkShowDescription = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkShowDescription.setObjectName("checkShowDescription")
+
+        self.checkShowDescription = QCheckBox(self.centralwidget)
+        self.checkShowDescription.setObjectName(u"checkShowDescription")
+
         self.gridLayout_2.addWidget(self.checkShowDescription, 9, 1, 1, 1)
-        self.labelChooseAccount = QtWidgets.QLabel(self.centralwidget)
-        self.labelChooseAccount.setObjectName("labelChooseAccount")
+
+        self.labelChooseAccount = QLabel(self.centralwidget)
+        self.labelChooseAccount.setObjectName(u"labelChooseAccount")
+
         self.gridLayout_2.addWidget(self.labelChooseAccount, 0, 0, 1, 1)
+
+
         self.gridLayout_9.addLayout(self.gridLayout_2, 0, 0, 1, 1)
-        self.tabWidget_2 = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget_2.setObjectName("tabWidget_2")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.gridLayout_10 = QtWidgets.QGridLayout(self.tab)
-        self.gridLayout_10.setObjectName("gridLayout_10")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
-        self.tableWidgetTransactions = QtWidgets.QTableWidget(self.tab)
-        self.tableWidgetTransactions.setObjectName("tableWidgetTransactions")
-        self.tableWidgetTransactions.setColumnCount(4)
-        self.tableWidgetTransactions.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetTransactions.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetTransactions.setHorizontalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetTransactions.setHorizontalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetTransactions.setHorizontalHeaderItem(3, item)
+
+        self.tabWidget_2 = QTabWidget(self.centralwidget)
+        self.tabWidget_2.setObjectName(u"tabWidget_2")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.gridLayout_10 = QGridLayout(self.tab)
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.gridLayout = QGridLayout()
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.tableWidgetTransactions = QTableWidget(self.tab)
+        if (self.tableWidgetTransactions.columnCount() < 4):
+            self.tableWidgetTransactions.setColumnCount(4)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.tableWidgetTransactions.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.tableWidgetTransactions.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.tableWidgetTransactions.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.tableWidgetTransactions.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        self.tableWidgetTransactions.setObjectName(u"tableWidgetTransactions")
+        self.tableWidgetTransactions.setSortingEnabled(True)
         self.tableWidgetTransactions.horizontalHeader().setCascadingSectionResizes(False)
-        self.tableWidgetTransactions.horizontalHeader().setDefaultSectionSize(149)
         self.tableWidgetTransactions.horizontalHeader().setMinimumSectionSize(100)
-        self.tableWidgetTransactions.horizontalHeader().setSortIndicatorShown(True)
+        self.tableWidgetTransactions.horizontalHeader().setDefaultSectionSize(149)
+        self.tableWidgetTransactions.horizontalHeader().setProperty("showSortIndicator", True)
         self.tableWidgetTransactions.horizontalHeader().setStretchLastSection(True)
+
         self.gridLayout.addWidget(self.tableWidgetTransactions, 0, 2, 3, 1)
-        self.tableWidgetAccounts = QtWidgets.QTableWidget(self.tab)
+
+        self.tableWidgetAccounts = QTableWidget(self.tab)
+        if (self.tableWidgetAccounts.columnCount() < 2):
+            self.tableWidgetAccounts.setColumnCount(2)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidgetAccounts.setHorizontalHeaderItem(0, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidgetAccounts.setHorizontalHeaderItem(1, __qtablewidgetitem5)
+        self.tableWidgetAccounts.setObjectName(u"tableWidgetAccounts")
         self.tableWidgetAccounts.setShowGrid(True)
-        self.tableWidgetAccounts.setObjectName("tableWidgetAccounts")
-        self.tableWidgetAccounts.setColumnCount(2)
-        self.tableWidgetAccounts.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetAccounts.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetAccounts.setHorizontalHeaderItem(1, item)
+        self.tableWidgetAccounts.setSortingEnabled(True)
         self.tableWidgetAccounts.horizontalHeader().setCascadingSectionResizes(False)
-        self.tableWidgetAccounts.horizontalHeader().setDefaultSectionSize(149)
         self.tableWidgetAccounts.horizontalHeader().setMinimumSectionSize(100)
+        self.tableWidgetAccounts.horizontalHeader().setDefaultSectionSize(149)
         self.tableWidgetAccounts.horizontalHeader().setStretchLastSection(True)
+
         self.gridLayout.addWidget(self.tableWidgetAccounts, 0, 1, 3, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(450, 13, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem2, 3, 2, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(350, 13, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem3, 3, 1, 1, 1)
+
+        self.horizontalSpacer_2 = QSpacerItem(450, 13, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout.addItem(self.horizontalSpacer_2, 3, 2, 1, 1)
+
+        self.horizontalSpacer = QSpacerItem(350, 13, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout.addItem(self.horizontalSpacer, 3, 1, 1, 1)
+
+
         self.gridLayout_10.addLayout(self.gridLayout, 0, 0, 1, 1)
+
         self.tabWidget_2.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
         self.tabWidget_2.addTab(self.tab_2, "")
+
         self.gridLayout_9.addWidget(self.tabWidget_2, 0, 1, 1, 1)
+
+
         self.gridLayout_8.addLayout(self.gridLayout_9, 0, 0, 1, 1)
+
         PyMoneyOrgaGui.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(PyMoneyOrgaGui)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1218, 21))
-        self.menubar.setObjectName("menubar")
-        self.menuFile = QtWidgets.QMenu(self.menubar)
-        self.menuFile.setObjectName("menuFile")
+        self.menubar = QMenuBar(PyMoneyOrgaGui)
+        self.menubar.setObjectName(u"menubar")
+        self.menubar.setGeometry(QRect(0, 0, 1218, 21))
+        self.menuFile = QMenu(self.menubar)
+        self.menuFile.setObjectName(u"menuFile")
         PyMoneyOrgaGui.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(PyMoneyOrgaGui)
-        self.statusbar.setObjectName("statusbar")
+        self.statusbar = QStatusBar(PyMoneyOrgaGui)
+        self.statusbar.setObjectName(u"statusbar")
         PyMoneyOrgaGui.setStatusBar(self.statusbar)
-        self.actionCreate_New_Account = QtWidgets.QAction(PyMoneyOrgaGui)
-        self.actionCreate_New_Account.setObjectName("actionCreate_New_Account")
-        self.actionDeleteAccount = QtWidgets.QAction(PyMoneyOrgaGui)
-        self.actionDeleteAccount.setObjectName("actionDeleteAccount")
-        self.actionDelete_Account = QtWidgets.QAction(PyMoneyOrgaGui)
-        self.actionDelete_Account.setObjectName("actionDelete_Account")
-        self.actionExit = QtWidgets.QAction(PyMoneyOrgaGui)
-        self.actionExit.setObjectName("actionExit")
+#if QT_CONFIG(shortcut)
+        self.labelAddExpenses.setBuddy(self.inputAddExpenses)
+        self.labelChooseAccount.setBuddy(self.comboChooseAccount)
+#endif // QT_CONFIG(shortcut)
+        QWidget.setTabOrder(self.tableWidgetAccounts, self.tableWidgetTransactions)
+
+        self.menubar.addAction(self.menuFile.menuAction())
         self.menuFile.addAction(self.actionCreate_New_Account)
         self.menuFile.addAction(self.actionDeleteAccount)
         self.menuFile.addAction(self.actionExit)
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.labelAddExpenses.setBuddy(self.inputAddExpenses)
-        self.labelChooseAccount.setBuddy(self.comboChooseAccount)
 
         self.retranslateUi(PyMoneyOrgaGui)
+
         self.tabWidget_2.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(PyMoneyOrgaGui)
-        PyMoneyOrgaGui.setTabOrder(self.tableWidgetAccounts, self.tableWidgetTransactions)
+
+
+        QMetaObject.connectSlotsByName(PyMoneyOrgaGui)
+    # setupUi
 
     def retranslateUi(self, PyMoneyOrgaGui):
-        _translate = QtCore.QCoreApplication.translate
-        PyMoneyOrgaGui.setWindowTitle(_translate("PyMoneyOrgaGui", "PyMoneyOrga"))
-        self.checkShowAmount.setText(_translate("PyMoneyOrgaGui", "Amount"))
-        self.comboChooseAccount.setItemText(0, _translate("PyMoneyOrgaGui", "NoAccountSaved"))
-        self.checkShowNewBalance.setText(_translate("PyMoneyOrgaGui", "New balance"))
-        self.label.setText(_translate("PyMoneyOrgaGui", "What to show in transaction table"))
-        self.buttonAddIncome.setText(_translate("PyMoneyOrgaGui", "New income"))
-        self.label_2.setText(_translate("PyMoneyOrgaGui", "Description"))
-        self.labelAddExpenses.setText(_translate("PyMoneyOrgaGui", "Amount"))
-        self.buttonAddExpenses.setText(_translate("PyMoneyOrgaGui", "New expenses"))
-        self.checkShowTimeStamp.setText(_translate("PyMoneyOrgaGui", "Time stamp"))
-        self.checkShowDescription.setText(_translate("PyMoneyOrgaGui", "Description"))
-        self.labelChooseAccount.setText(_translate("PyMoneyOrgaGui", "Choose account"))
-        self.tableWidgetTransactions.setSortingEnabled(True)
-        item = self.tableWidgetTransactions.horizontalHeaderItem(0)
-        item.setText(_translate("PyMoneyOrgaGui", "Time stamp"))
-        item = self.tableWidgetTransactions.horizontalHeaderItem(1)
-        item.setText(_translate("PyMoneyOrgaGui", "Amount"))
-        item = self.tableWidgetTransactions.horizontalHeaderItem(2)
-        item.setText(_translate("PyMoneyOrgaGui", "New balance"))
-        item = self.tableWidgetTransactions.horizontalHeaderItem(3)
-        item.setText(_translate("PyMoneyOrgaGui", "Description"))
-        self.tableWidgetAccounts.setSortingEnabled(True)
-        item = self.tableWidgetAccounts.horizontalHeaderItem(0)
-        item.setText(_translate("PyMoneyOrgaGui", "Account"))
-        item = self.tableWidgetAccounts.horizontalHeaderItem(1)
-        item.setText(_translate("PyMoneyOrgaGui", "Balance"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab), _translate("PyMoneyOrgaGui", "Table view"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("PyMoneyOrgaGui", "Graphical view"))
-        self.menuFile.setTitle(_translate("PyMoneyOrgaGui", "File"))
-        self.actionCreate_New_Account.setText(_translate("PyMoneyOrgaGui", "Create New Account"))
-        self.actionDeleteAccount.setText(_translate("PyMoneyOrgaGui", "Delete Account"))
-        self.actionDelete_Account.setText(_translate("PyMoneyOrgaGui", "Delete Account"))
-        self.actionExit.setText(_translate("PyMoneyOrgaGui", "Exit"))
+        PyMoneyOrgaGui.setWindowTitle(QCoreApplication.translate("PyMoneyOrgaGui", u"PyMoneyOrga", None))
+        self.actionCreate_New_Account.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Create New Account", None))
+        self.actionDeleteAccount.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Delete Account", None))
+        self.actionDelete_Account.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Delete Account", None))
+        self.actionExit.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Exit", None))
+        self.checkShowAmount.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Amount", None))
+        self.comboChooseAccount.setItemText(0, QCoreApplication.translate("PyMoneyOrgaGui", u"NoAccountSaved", None))
+
+        self.checkShowNewBalance.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New balance", None))
+        self.label.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"What to show in transaction table", None))
+        self.buttonAddIncome.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New income", None))
+        self.label_2.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Description", None))
+        self.labelAddExpenses.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Amount", None))
+        self.buttonAddExpenses.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New expenses", None))
+        self.checkShowTimeStamp.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Time stamp", None))
+        self.checkShowDescription.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Description", None))
+        self.labelChooseAccount.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Choose account", None))
+        ___qtablewidgetitem = self.tableWidgetTransactions.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Time stamp", None));
+        ___qtablewidgetitem1 = self.tableWidgetTransactions.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Amount", None));
+        ___qtablewidgetitem2 = self.tableWidgetTransactions.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New balance", None));
+        ___qtablewidgetitem3 = self.tableWidgetTransactions.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Description", None));
+        ___qtablewidgetitem4 = self.tableWidgetAccounts.horizontalHeaderItem(0)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Account", None));
+        ___qtablewidgetitem5 = self.tableWidgetAccounts.horizontalHeaderItem(1)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Balance", None));
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab), QCoreApplication.translate("PyMoneyOrgaGui", u"Table view", None))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), QCoreApplication.translate("PyMoneyOrgaGui", u"Graphical view", None))
+        self.menuFile.setTitle(QCoreApplication.translate("PyMoneyOrgaGui", u"File", None))
+    # retranslateUi
+
