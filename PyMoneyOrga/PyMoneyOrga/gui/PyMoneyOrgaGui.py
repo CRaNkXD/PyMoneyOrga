@@ -15,8 +15,6 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 
-from PySide2.QtCharts import QChartView
-
 
 class Ui_PyMoneyOrgaGui(object):
     def setupUi(self, PyMoneyOrgaGui):
@@ -127,10 +125,10 @@ class Ui_PyMoneyOrgaGui(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_3 = QGridLayout()
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.widgetChartView = QChartView(self.tab_2)
-        self.widgetChartView.setObjectName(u"widgetChartView")
+        self.widgetChart = QWidget(self.tab_2)
+        self.widgetChart.setObjectName(u"widgetChart")
 
-        self.gridLayout_3.addWidget(self.widgetChartView, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.widgetChart, 0, 0, 1, 1)
 
 
         self.gridLayout_5.addLayout(self.gridLayout_3, 0, 0, 1, 1)
@@ -162,10 +160,10 @@ class Ui_PyMoneyOrgaGui(object):
 
         self.gridLayout_4 = QGridLayout()
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.inputDescriptionEpenses = QLineEdit(self.centralwidget)
-        self.inputDescriptionEpenses.setObjectName(u"inputDescriptionEpenses")
+        self.inputDescriptionExpenses = QLineEdit(self.centralwidget)
+        self.inputDescriptionExpenses.setObjectName(u"inputDescriptionExpenses")
 
-        self.gridLayout_4.addWidget(self.inputDescriptionEpenses, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.inputDescriptionExpenses, 0, 1, 1, 1)
 
         self.inputAddExpenses = QLineEdit(self.centralwidget)
         self.inputAddExpenses.setObjectName(u"inputAddExpenses")
@@ -232,8 +230,8 @@ class Ui_PyMoneyOrgaGui(object):
         self.labelAddExpenses.setBuddy(self.inputAddExpenses)
 #endif // QT_CONFIG(shortcut)
         QWidget.setTabOrder(self.comboChooseAccount, self.inputAddExpenses)
-        QWidget.setTabOrder(self.inputAddExpenses, self.inputDescriptionEpenses)
-        QWidget.setTabOrder(self.inputDescriptionEpenses, self.buttonAddExpenses)
+        QWidget.setTabOrder(self.inputAddExpenses, self.inputDescriptionExpenses)
+        QWidget.setTabOrder(self.inputDescriptionExpenses, self.buttonAddExpenses)
         QWidget.setTabOrder(self.buttonAddExpenses, self.inputAddIncome)
         QWidget.setTabOrder(self.inputAddIncome, self.inputDescriptionIncome)
         QWidget.setTabOrder(self.inputDescriptionIncome, self.buttonAddIncome)

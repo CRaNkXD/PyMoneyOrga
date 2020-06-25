@@ -1,6 +1,3 @@
-from .database.database_sqlite import Database_sqlite
-
-
 class Account(object):
     """ Combines a name with a balance value """
 

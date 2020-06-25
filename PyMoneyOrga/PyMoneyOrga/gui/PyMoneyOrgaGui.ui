@@ -178,7 +178,7 @@
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0">
-             <widget class="QChartView" name="widgetChartView" native="true"/>
+             <widget class="QWidget" name="widgetChart" native="true"/>
             </item>
            </layout>
           </item>
@@ -228,7 +228,7 @@
         <item row="2" column="1">
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="1">
-           <widget class="QLineEdit" name="inputDescriptionEpenses"/>
+           <widget class="QLineEdit" name="inputDescriptionExpenses"/>
           </item>
           <item row="0" column="0">
            <widget class="QLineEdit" name="inputAddExpenses"/>
@@ -322,18 +322,10 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QWidget</extends>
-   <header>PySide2.QtCharts</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>comboChooseAccount</tabstop>
   <tabstop>inputAddExpenses</tabstop>
-  <tabstop>inputDescriptionEpenses</tabstop>
+  <tabstop>inputDescriptionExpenses</tabstop>
   <tabstop>buttonAddExpenses</tabstop>
   <tabstop>inputAddIncome</tabstop>
   <tabstop>inputDescriptionIncome</tabstop>

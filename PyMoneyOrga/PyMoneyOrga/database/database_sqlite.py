@@ -83,7 +83,7 @@ class Database_sqlite(Database_interface):
 
 
     def get_all_transaction(self, acc_name):
-        """returns a list [transactions] of all trnsactions for specified account from the database"""
+        """returns a list [transactions] of all trnsactions for the specified account from the database"""
         transactions = []
         session = self.Session()
         acc = session.query(Account).filter_by(acc_name=acc_name).first()

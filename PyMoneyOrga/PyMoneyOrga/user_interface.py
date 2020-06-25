@@ -1,5 +1,6 @@
 import sys
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCharts import QtCharts
 from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .dialogs.dialogDeleteAccount import DialogDeleteAccount
 from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount
@@ -36,6 +37,9 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.buttonAddIncome.clicked.connect(self.add_new_income)
 
         self.comboChooseAccount.currentTextChanged.connect(self.init_table_transactions)
+        self.comboChooseAccount.currentTextChanged.connect(self.init_chart)
+
+        self.setup_chart()
                                             
         self.init_gui_with_database()
 
@@ -45,12 +49,14 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.init_table_accounts(accs_dict)
         self.init_comboChooseAccount(accs_dict)
         self.init_table_transactions()
+        self.init_chart()
         if not accs_dict:
             self.buttonAddExpenses.setEnabled(False)
             self.buttonAddIncome.setEnabled(False)
         else:
             self.buttonAddExpenses.setEnabled(True)
             self.buttonAddIncome.setEnabled(True)
+
 
     def init_comboChooseAccount(self, accs_dict):
         if accs_dict != {}:
@@ -80,6 +86,65 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
                 currentRowCount += 1
         else:
             self.tableWidgetTransactions.setRowCount(0)
+
+
+    def setup_chart(self):
+        # setup the chart view by adding it to the widgetChart used as a place holder in the qt designer
+        self.widgetChart.setContentsMargins(0, 0, 0, 0)
+        lay = QtWidgets.QVBoxLayout(self.widgetChart)
+        lay.setContentsMargins(0, 0, 0, 0)
+
+        self.chartview = QtCharts.QChartView()
+        self.chartview.setContentsMargins(0, 0, 0, 0)
+        lay.addWidget(self.chartview)
+
+        # init data series for chart
+        self.series = QtCharts.QLineSeries()
+
+        # Create Chart and set General Chart setting
+        self.chart = QtCharts.QChart()
+        self.chart.addSeries(self.series)
+        self.chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
+
+        # X Axis Settings
+        self.axis_x = QtCharts.QValueAxis()
+        self.chart.addAxis(self.axis_x, QtCore.Qt.AlignBottom)
+        #self.axis_x.setLabelFormat("dd.MM (h:mm)")
+        self.axis_x.setTitleText("Date")
+        self.series.attachAxis(self.axis_x)
+
+        # Y Axis Settings
+        self.axis_y = QtCharts.QValueAxis()
+        self.chart.addAxis(self.axis_y, QtCore.Qt.AlignLeft)
+        self.axis_y.setTitleText("Balance")
+        self.series.attachAxis(self.axis_y)
+
+        self.chartview.setChart(self.chart)
+
+
+    def init_chart(self):
+        # initialize the data for the chart view
+        current_acc = self.comboChooseAccount.currentText()
+        transactions = self.database.get_all_transaction(current_acc)
+        self.series.clear()
+        x_max = transactions[0].id
+        x_min = transactions[0].id
+        y_min = transactions[0].new_balance
+        y_max = transactions[0].new_balance
+        for transaction in transactions:
+            x = transaction.id
+            y = transaction.new_balance
+            x_max = max(x_max, x)
+            y_max = max(y_max, y)
+            x_min = min(x_min, x)
+            y_min = min(y_min, y)
+            self.series.append(x, y)
+        
+        self.axis_x.setMin(x_min)
+        self.axis_x.setMax(x_max)
+        self.axis_y.setMin(y_min)
+        self.axis_y.setMax(y_max)
+        self.chartview.repaint()
 
 
     def add_item_table_transactions(self, time_stamp):
@@ -147,6 +212,7 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         time_stamp = self.database.add_transaction(acc_name, -expenses, acc.balance, description)
         self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)
+        self.init_chart()
 
 
     def add_new_income(self):
@@ -160,3 +226,4 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         time_stamp = self.database.add_transaction(acc_name, income, acc.balance, description)
         self.update_table_accounts_balance(acc_name, acc.balance)
         self.add_item_table_transactions(time_stamp)
+        self.init_chart()
