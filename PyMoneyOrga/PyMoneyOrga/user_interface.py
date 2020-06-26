@@ -43,6 +43,8 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
                                             
         self.init_gui_with_database()
 
+        self.tabWidget.setCurrentIndex(0)
+
     
     def init_gui_with_database(self):
         accs_dict = self.database.get_all_acc()
@@ -75,11 +77,14 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.tableWidgetTransactions.setRowCount(len(transactions))
             currentRowCount = 0
             for transaction in transactions:
-                item_time_stamp = QtWidgets.QTableWidgetItem(str(transaction.time_stamp))
+                item_time_stamp = QtWidgets.QTableWidgetItem()
+                item_time_stamp.setData(QtCore.Qt.DisplayRole, transaction.time_stamp.strftime("%d/%m/%y - %H:%M:%S"))
                 self.tableWidgetTransactions.setItem(currentRowCount, 0, item_time_stamp)
-                item_amount = QtWidgets.QTableWidgetItem(str(transaction.amount))
+                item_amount = QtWidgets.QTableWidgetItem()
+                item_amount.setData(QtCore.Qt.DisplayRole, transaction.amount)
                 self.tableWidgetTransactions.setItem(currentRowCount, 1, item_amount)
-                item_new_balance = QtWidgets.QTableWidgetItem(str(transaction.new_balance))
+                item_new_balance = QtWidgets.QTableWidgetItem()
+                item_new_balance.setData(QtCore.Qt.DisplayRole, transaction.new_balance)
                 self.tableWidgetTransactions.setItem(currentRowCount, 2, item_new_balance)
                 item_description = QtWidgets.QTableWidgetItem(str(transaction.description))
                 self.tableWidgetTransactions.setItem(currentRowCount, 3, item_description)
@@ -127,23 +132,29 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         current_acc = self.comboChooseAccount.currentText()
         transactions = self.database.get_all_transaction(current_acc)
         self.series.clear()
-        x_max = transactions[0].id
-        x_min = transactions[0].id
-        y_min = transactions[0].new_balance
-        y_max = transactions[0].new_balance
-        for transaction in transactions:
-            x = transaction.id
-            y = transaction.new_balance
-            x_max = max(x_max, x)
-            y_max = max(y_max, y)
-            x_min = min(x_min, x)
-            y_min = min(y_min, y)
-            self.series.append(x, y)
+        if transactions != []:
+            #x_max = transactions[0].id
+            #x_min = transactions[0].id
+            y_min = transactions[0].new_balance
+            y_max = transactions[0].new_balance
+            x = 0
+            for transaction in transactions:
+                #x = transaction.id
+                x += 1
+                y = transaction.new_balance
+                #x_max = max(x_max, x)
+                #x_min = min(x_min, x)
+                y_max = max(y_max, y)
+                y_min = min(y_min, y)
+                self.series.append(x, y)
         
-        self.axis_x.setMin(x_min)
-        self.axis_x.setMax(x_max)
-        self.axis_y.setMin(y_min)
-        self.axis_y.setMax(y_max)
+            #self.axis_x.setMin(x_min)
+            #self.axis_x.setMax(x_max)
+            self.axis_x.setMin(0)
+            self.axis_x.setMax(x)
+            self.axis_y.setMin(y_min)
+            self.axis_y.setMax(y_max)
+
         self.chartview.repaint()
 
 
@@ -154,13 +165,16 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         if transaction != None:
             currentRowCount = self.tableWidgetTransactions.rowCount() + 1
             self.tableWidgetTransactions.setRowCount(currentRowCount)
-            item_time_stamp = QtWidgets.QTableWidgetItem(str(transaction.time_stamp))
+            item_time_stamp = QtWidgets.QTableWidgetItem()
+            item_time_stamp.setData(QtCore.Qt.DisplayRole, transaction.time_stamp.strftime("%d/%m/%y - %H:%M:%S"))
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 0, item_time_stamp)
-            item_amount = QtWidgets.QTableWidgetItem(str(transaction.amount))
+            item_amount = QtWidgets.QTableWidgetItem()
+            item_amount.setData(QtCore.Qt.DisplayRole, transaction.amount)
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 1, item_amount)
-            item_new_balance = QtWidgets.QTableWidgetItem(str(transaction.new_balance))
+            item_new_balance = QtWidgets.QTableWidgetItem()
+            item_new_balance.setData(QtCore.Qt.DisplayRole, transaction.new_balance)
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 2, item_new_balance)
-            item_description = QtWidgets.QTableWidgetItem(str(transaction.description))
+            item_description = QtWidgets.QTableWidgetItem(transaction.description)
             self.tableWidgetTransactions.setItem(currentRowCount - 1, 3, item_description)
 
 
@@ -172,10 +186,10 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
                 self.comboChooseAccount.addItem(acc_name)
                 item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
                 self.tableWidgetAccounts.setItem(currentRowCount, 0, item_acc_name)
-                item_balance = QtWidgets.QTableWidgetItem(str(balance))
+                item_balance = QtWidgets.QTableWidgetItem()
+                item_balance.setData(QtCore.Qt.DisplayRole, balance)
                 self.tableWidgetAccounts.setItem(currentRowCount, 1, item_balance)
                 currentRowCount += 1
-
         else:
             self.tableWidgetAccounts.setRowCount(0)
 
@@ -203,7 +217,11 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
 
     def add_new_expenses(self):
         acc_name = self.comboChooseAccount.currentText()
-        expenses = int(self.inputAddExpenses.text()) if self.inputAddExpenses.text() != '' else 0
+        if self.inputAddExpenses.text() != '':
+            expenses = int(self.inputAddExpenses.text())
+        else:
+           return
+        
         description = self.inputDescriptionExpenses.text() if self.inputDescriptionExpenses.text() != '' else "expense"
         acc = self.database.get_acc(acc_name)
         acc = Account(acc_name,acc[acc_name])
@@ -217,7 +235,11 @@ class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
 
     def add_new_income(self):
         acc_name = self.comboChooseAccount.currentText()
-        income = int(self.inputAddIncome.text()) if self.inputAddIncome.text() != '' else 0
+        if self.inputAddIncome.text() != '':
+            income = int(self.inputAddIncome.text()) 
+        else:
+            return
+
         description = self.inputDescriptionIncome.text() if self.inputDescriptionIncome.text() != '' else "income"
         acc = self.database.get_acc(acc_name)
         acc = Account(acc_name,acc[acc_name])

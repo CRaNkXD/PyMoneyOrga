@@ -30,11 +30,11 @@
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_9">
       <item row="0" column="1">
-       <widget class="QTabWidget" name="tabWidget_2">
+       <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="tab">
+        <widget class="QWidget" name="tabTableView">
          <attribute name="title">
           <string>Table view</string>
          </attribute>
@@ -170,7 +170,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_2">
+        <widget class="QWidget" name="tabGraphicView">
          <attribute name="title">
           <string>Graphical view</string>
          </attribute>
@@ -336,7 +336,7 @@
   <tabstop>checkShowDescription</tabstop>
   <tabstop>tableWidgetAccounts</tabstop>
   <tabstop>tableWidgetTransactions</tabstop>
-  <tabstop>tabWidget_2</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>
