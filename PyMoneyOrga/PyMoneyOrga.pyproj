@@ -67,6 +67,7 @@
     <Content Include="PyMoneyOrga\gui\dialogCreateNewAccount.ui" />
     <Content Include="PyMoneyOrga\gui\dialogDeleteAccount.ui" />
     <Content Include="PyMoneyOrga\gui\PyMoneyOrgaGui.ui" />
+    <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="venv_pyqt5\">

@@ -4,6 +4,12 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 PyMoneyOrga/venv_pyqt5/
+PyMoneyOrga/venv_pyside/
+*.sln
+*.pyproj
+__pycache__/
+pymoneyorga.sqlite
+pymoneyorga.sqlite.test
 
 # User-specific files
 *.rsuser
