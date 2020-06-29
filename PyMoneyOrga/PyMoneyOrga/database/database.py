@@ -1,4 +1,3 @@
-
 class Database(object):
     """description of class"""
 
@@ -6,7 +5,7 @@ class Database(object):
         self.file_name = file_name
 
     def __str__(self):
-       return f"Database from file {self.file_name}."
+        return f"Database from file {self.file_name}."
 
     def __repr__(self):
         return f"Database from file {self.file_name}."
@@ -16,6 +15,3 @@ class Database(object):
 
     def add_acc(self, account):
         self.dict_all_acc[account.acc_name] = account
-
-
-
