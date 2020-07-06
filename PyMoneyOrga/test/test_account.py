@@ -1,22 +1,26 @@
 import unittest
-from PyMoneyOrga.account import Account
+from PyMoneyOrga.domain.account import Account
 
 
-class Test_account(unittest.TestCase):
+class TestAccount(unittest.TestCase):
     def setUp(self):
-        self.daniels_account = Account("Daniel", 100)
+        self.user_account = Account("User", 100)
         return super().setUp()
 
     def test_add_cash(self):
-        self.daniels_account.add_income(100)
-        self.assertEqual(self.daniels_account.balance, 200)
+        self.user_account.add_income(100)
+        self.assertEqual(self.user_account.balance, 200)
 
     def test_add_expenses(self):
-        self.daniels_account.add_expenses(50)
-        self.assertEqual(self.daniels_account.balance, 50)
+        self.user_account.add_expenses(50)
+        self.assertEqual(self.user_account.balance, 50)
 
     def test_acc_name(self):
-        self.assertEqual(self.daniels_account.acc_name, "Daniel")
+        self.assertEqual(self.user_account.acc_name, "User")
+
+    def test_add_expenses_default_description(self):
+        self.user_account.add_expenses(50)
+        self.assertEqual(self.user_account.transactions[0].description, "expense")
 
 
 if __name__ == "__main__":
