@@ -4,10 +4,10 @@ from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .dialogs.dialogDeleteAccount import DialogDeleteAccount
 from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount
 
-from .account import Account
+from .domain.account import Account
 
 
-class UserInterface(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
+class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     """implementation of the PyMoneyOrga Gui"""
 
     def __init__(self, database, parent=None):
