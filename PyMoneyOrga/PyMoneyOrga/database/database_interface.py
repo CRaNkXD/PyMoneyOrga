@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Database_interface(ABC):
+class DatabaseInterface(ABC):
     """description of class"""
 
     def __init__(self, file_name):
@@ -37,7 +37,7 @@ class Database_interface(ABC):
         pass
 
     @abstractmethod
-    def add_transaction(self, acc_name, amount, new_balance):
+    def add_transaction(self, acc_name, amount, new_balance, description):
         """
         add a transaction to the the transaction table and commit to
         database

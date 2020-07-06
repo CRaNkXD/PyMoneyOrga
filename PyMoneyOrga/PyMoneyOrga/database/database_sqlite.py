@@ -1,40 +1,22 @@
 from sqlalchemy import create_engine
-from sqlalchemy import Column
-from sqlalchemy import Integer, BigInteger, String, DateTime
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy import (
+    Integer,
+    BigInteger,
+    String,
+    DateTime,
+    ForeignKey,
+    Column,
+    MetaData,
+    Table,
+)
+from sqlalchemy.orm import relationship, mapper, sessionmaker, clear_mappers
 import datetime
 
-from .database_interface import Database_interface
-
-Base = declarative_base()
-
-
-class Account(Base):
-    __tablename__ = "accounts"
-    id = Column(Integer, primary_key=True)
-    acc_name = Column(String, nullable=False)
-    balance = Column(BigInteger, nullable=False)
-
-    transactions = relationship(
-        "Transaction", cascade="all, delete, delete-orphan", backref="account"
-    )
+from ..domain.account import Account, Transaction
+from .database_interface import DatabaseInterface
 
 
-class Transaction(Base):
-    __tablename__ = "transactions"
-    id = Column(Integer, primary_key=True)
-    account_id = Column(Integer, ForeignKey("accounts.id", ondelete="CASCADE"))
-    amount = Column(BigInteger, nullable=False)
-    new_balance = Column(BigInteger, nullable=False)
-    time_stamp = Column(DateTime, nullable=False)
-    description = Column(String)
-
-
-class Database_sqlite(Database_interface):
+class DatabaseSqlite(DatabaseInterface):
     """database implementation using sqlite3"""
 
     def __init__(self, url=None, file_name=None):
@@ -48,121 +30,107 @@ class Database_sqlite(Database_interface):
         else:
             # add error
             pass
-
-        Base.metadata.create_all(engine)
+        self.meta_data = MetaData(bind=engine)
+        self._define_and_map_tables(self.meta_data)
+        self.meta_data.create_all()
         self.Session = sessionmaker(bind=engine)
+        self.session = self.Session()
+
+    def _define_and_map_tables(self, meta_data):
+        account = Table(
+            "account",
+            meta_data,
+            Column("id", Integer, primary_key=True, autoincrement=True),
+            Column("_acc_name", String(50), nullable=False),
+            Column("_balance", BigInteger, nullable=False),
+        )
+
+        transaction = Table(
+            "transaction",
+            meta_data,
+            Column("id", Integer, primary_key=True, autoincrement=True),
+            Column("account_id", ForeignKey("account.id", ondelete="CASCADE")),
+            Column("amount", BigInteger, nullable=False),
+            Column("new_balance", BigInteger, nullable=False),
+            Column("time_stamp", DateTime, nullable=False),
+            Column("description", String(50), nullable=False),
+        )
+
+        transaction_mapper = mapper(Transaction, transaction)
+        mapper(
+            Account,
+            account,
+            properties={
+                "_transactions": relationship(
+                    transaction_mapper,
+                    cascade="all, delete, delete-orphan",
+                    backref="account",
+                )
+            },
+        )
 
     def _clear_all_tables(self):
-        session = self.Session()
-        engine = session.get_bind()
-        Base.metadata.drop_all(engine)
-        Base.metadata.create_all(engine)
+        """
+        close session delete all tables and clear mappers
+        only used in unittest to tear down the tables
+        """
+        self.session.close()
+        self.meta_data.drop_all()
+        self.meta_data.create_all()
+        clear_mappers()
 
     def delete_account_table(self, acc_name):
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
+        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
         if acc is None:
-            session.close()
+            return
         # you have to call the delete method on the session otherwise it is
         # called on the querry and the cascade options will not be used
-        session.delete(acc)
-        session.commit()
-        session.close()
+        self.session.delete(acc)
+        self.session.commit()
 
     def get_all_acc(self):
         """
-        returns a dictionary {acc_name:balance} of all saved accounts
+        returns a list of Account objects of all saved accounts
         from the database
         """
-        accs_dict = {}
-        session = self.Session()
-        accs = session.query(Account).all()
-        if accs is None:
-            session.close()
-            return {}
-
-        for acc in accs:
-            accs_dict[acc.acc_name] = acc.balance
-
-        session.close()
-        return accs_dict
-
-    def get_all_transaction(self, acc_name):
-        """
-        returns a list [transactions] of all trnsactions for the
-        specified account from the database
-        """
-        transactions = []
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
-        if acc is None:
-            return []
-
-        transactions = acc.transactions
-        session.close()
-        return transactions
-
-    def get_transaction(self, acc_name, time_stamp):
-        """returns a transaction from the database"""
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
-        if acc is None:
-            session.close()
-            return None
-
-        for transaction in acc.transactions:
-            if transaction.time_stamp == time_stamp:
-                session.close()
-                return transaction
-
-        return None
+        accs = self.session.query(Account).all()
+        return accs
 
     def add_acc(self, acc_name, balance):
         """add an account to the the account table and commit to database"""
-        session = self.Session()
-        session.add(Account(acc_name=acc_name, balance=balance))
-        session.commit()
-        session.close()
+        self.session.add(Account(acc_name=acc_name, balance=balance))
+        self.session.commit()
 
     def get_acc(self, acc_name):
         """
-        returns a dictionary {acc_name:balance} from the database.
-        if not existing {acc_name:None}
+        returns an Account object from the database.
+        if not existing None
         """
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
-        session.close()
-        if acc is None:
-            session.close()
-            return {acc_name: None}
-        return {acc.acc_name: acc.balance}
+        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
+        return acc
 
     def update_acc_balance(self, acc_name, new_balance):
         """get an account from the database"""
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
+        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
         if acc is None:
-            session.close()
+            pass
             # raise exception
         else:
             acc.balance = new_balance
-            session.commit()
-            session.close()
+            self.session.commit()
 
     def add_transaction(self, acc_name, amount, new_balance, description):
         """
         add a transaction to the transaction table and commit to
         database. return the time stamp used to save the transaction
         """
-        session = self.Session()
-        acc = session.query(Account).filter_by(acc_name=acc_name).first()
+        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
         if acc is None:
-            session.close()
             # raise exception
             return None
         else:
             time_stamp = datetime.datetime.now()
-            session.add(
+            self.session.add(
                 Transaction(
                     account_id=acc.id,
                     amount=amount,
@@ -171,6 +139,5 @@ class Database_sqlite(Database_interface):
                     description=description,
                 )
             )
-            session.commit()
-            session.close()
+            self.session.commit()
             return time_stamp
