@@ -8,7 +8,7 @@ class Transaction(object):
     new_balance: int
     description: str
     time_stamp: datetime.datetime
-    account_id: int = None
+    account_id: int = None # foreign key to Account
 
 
 class Account(object):
@@ -29,7 +29,9 @@ class Account(object):
     def __repr__(self):
         return f"Account Name: {self._acc_name}; Money in Account: {self._balance} €"
 
-    def add_income(self, amount, description="income"):
+    def add_income(self, amount, description=None):
+        if description is None:
+            description = "income"
         self._balance += amount
         self.transactions.append(
             Transaction(
@@ -40,7 +42,9 @@ class Account(object):
             )
         )
 
-    def add_expenses(self, amount, description="expense"):
+    def add_expense(self, amount, description=None):
+        if description is None:
+            description = "expense"
         self._balance -= amount
         self.transactions.append(
             Transaction(
