@@ -103,19 +103,18 @@ class DatabaseSqlite(DatabaseInterface):
         """
         session.rollback()
 
-    def delete_account_table(self, acc_name, session):
-        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
+    def delete_acc(self, session, acc_name):
+        acc = session.query(Account).filter_by(_acc_name=acc_name).first()
         if acc is None:
             return
         # you have to call the delete method on the session otherwise it is
         # called on the querry and the cascade options will not be used
-        self.session.delete(acc)
-        self.session.commit()
+        session.delete(acc)
 
     def get_all_acc(self, session):
         """
         returns a list of Account objects of all saved accounts
-        from the database
+        from the database if none defined empty list []
         """
         accs = session.query(Account).all()
         return accs

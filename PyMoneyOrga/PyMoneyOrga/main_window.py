@@ -4,14 +4,15 @@ from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .dialogs.dialogDeleteAccount import DialogDeleteAccount
 from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount
 
-from .domain.account import Account
+from .service_layer import services_account
+from .database.database_interface import DatabaseInterface
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     """implementation of the PyMoneyOrga Gui"""
 
-    def __init__(self, database, parent=None):
-        super(UserInterface, self).__init__(parent)
+    def __init__(self, database: DatabaseInterface, parent=None):
+        super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
         self.tableWidgetTransactions.setEditTriggers(
@@ -49,30 +50,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.tabWidget.setCurrentIndex(0)
 
     def init_gui_with_database(self):
-        accs_dict = self.database.get_all_acc()
-        self.init_table_accounts(accs_dict)
-        self.init_comboChooseAccount(accs_dict)
+        accs = services_account.get_all_acc(self.database)
+        self.init_table_accounts(accs)
+        self.init_comboChooseAccount(accs)
         self.init_table_transactions()
         self.init_chart()
-        if not accs_dict:
+        if not accs:
             self.buttonAddExpenses.setEnabled(False)
             self.buttonAddIncome.setEnabled(False)
         else:
             self.buttonAddExpenses.setEnabled(True)
             self.buttonAddIncome.setEnabled(True)
 
-    def init_comboChooseAccount(self, accs_dict):
-        if accs_dict != {}:
+    def init_comboChooseAccount(self, accs):
+        if accs:
             self.comboChooseAccount.clear()
-            for acc_name in accs_dict.keys():
-                self.comboChooseAccount.addItem(acc_name)
+            for acc in accs:
+                self.comboChooseAccount.addItem(acc.acc_name)
         else:
             self.comboChooseAccount.clear()
             self.comboChooseAccount.addItem("NoAccountSaved")
 
+    def init_table_accounts(self, accs):
+        if accs:
+            self.tableWidgetAccounts.setRowCount(len(accs))
+            currentRowCount = 0
+            for acc in accs:
+                item_acc_name = QtWidgets.QTableWidgetItem(acc.acc_name)
+                self.tableWidgetAccounts.setItem(currentRowCount, 0, item_acc_name)
+                item_balance = QtWidgets.QTableWidgetItem()
+                item_balance.setData(QtCore.Qt.DisplayRole, acc.balance)
+                self.tableWidgetAccounts.setItem(currentRowCount, 1, item_balance)
+                currentRowCount += 1
+        else:
+            self.tableWidgetAccounts.setRowCount(0)
+
     def init_table_transactions(self):
         current_acc = self.comboChooseAccount.currentText()
-        transactions = self.database.get_all_transaction(current_acc)
+        transactions = services_account.get_transactions(self.database, current_acc)
         if transactions != []:
             self.tableWidgetTransactions.setRowCount(len(transactions))
             currentRowCount = 0
@@ -142,7 +157,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def init_chart(self):
         # initialize the data for the chart view
         current_acc = self.comboChooseAccount.currentText()
-        transactions = self.database.get_all_transaction(current_acc)
+        transactions = services_account.get_transactions(self.database, current_acc)
         self.series.clear()
         if transactions != []:
             # x_max = transactions[0].id
@@ -169,60 +184,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
 
         self.chartview.repaint()
 
-    def add_item_table_transactions(self, time_stamp):
-        """
-        add an item to the transactions table from the database using
-        the specific time stamp as identifier
-        """
-        current_acc = self.comboChooseAccount.currentText()
-        transaction = self.database.get_transaction(current_acc, time_stamp)
-        if transaction is not None:
-            currentRowCount = self.tableWidgetTransactions.rowCount() + 1
-            self.tableWidgetTransactions.setRowCount(currentRowCount)
-            item_time_stamp = QtWidgets.QTableWidgetItem()
-            item_time_stamp.setData(
-                QtCore.Qt.DisplayRole,
-                transaction.time_stamp.strftime("%d/%m/%y - %H:%M:%S"),
-            )
-            self.tableWidgetTransactions.setItem(
-                currentRowCount - 1, 0, item_time_stamp
-            )
-            item_amount = QtWidgets.QTableWidgetItem()
-            item_amount.setData(QtCore.Qt.DisplayRole, transaction.amount)
-            self.tableWidgetTransactions.setItem(currentRowCount - 1, 1, item_amount)
-            item_new_balance = QtWidgets.QTableWidgetItem()
-            item_new_balance.setData(QtCore.Qt.DisplayRole, transaction.new_balance)
-            self.tableWidgetTransactions.setItem(
-                currentRowCount - 1, 2, item_new_balance
-            )
-            item_description = QtWidgets.QTableWidgetItem(transaction.description)
-            self.tableWidgetTransactions.setItem(
-                currentRowCount - 1, 3, item_description
-            )
-
-    def init_table_accounts(self, accs_dict):
-        if accs_dict != {}:
-            self.tableWidgetAccounts.setRowCount(len(accs_dict))
-            currentRowCount = 0
-            for acc_name, balance in accs_dict.items():
-                self.comboChooseAccount.addItem(acc_name)
-                item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
-                self.tableWidgetAccounts.setItem(currentRowCount, 0, item_acc_name)
-                item_balance = QtWidgets.QTableWidgetItem()
-                item_balance.setData(QtCore.Qt.DisplayRole, balance)
-                self.tableWidgetAccounts.setItem(currentRowCount, 1, item_balance)
-                currentRowCount += 1
-        else:
-            self.tableWidgetAccounts.setRowCount(0)
-
-    def update_table_accounts_balance(self, acc_name, balance):
-        for row in range(self.tableWidgetAccounts.rowCount()):
-            item_acc_name = self.tableWidgetAccounts.item(row, 0)
-            local_acc_name = item_acc_name.text()
-            if acc_name == local_acc_name:
-                item_balance = self.tableWidgetAccounts.item(row, 1)
-                item_balance.setText(str(balance))
-
     def open_dialog_create_new_acc(self):
         if self.dialog_create_new_acc is None:
             self.dialog_create_new_acc = DialogCreateNewAccount(self)
@@ -236,7 +197,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
     def add_new_expenses(self):
         acc_name = self.comboChooseAccount.currentText()
         if self.inputAddExpenses.text() != "":
-            expenses = int(self.inputAddExpenses.text())
+            expense = int(self.inputAddExpenses.text())
         else:
             return
 
@@ -245,15 +206,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             if self.inputDescriptionExpenses.text() != ""
             else "expense"
         )
-        acc = self.database.get_acc(acc_name)
-        acc = Account(acc_name, acc[acc_name])
-        acc.add_expenses(expenses)
-        self.database.update_acc_balance(acc_name, acc.balance)
-        time_stamp = self.database.add_transaction(
-            acc_name, -expenses, acc.balance, description
-        )
-        self.update_table_accounts_balance(acc_name, acc.balance)
-        self.add_item_table_transactions(time_stamp)
+        services_account.add_expense(self.database, acc_name, expense, description)
+        accs = services_account.get_all_acc(self.database)
+        self.init_table_accounts(accs)
+        self.init_table_transactions()
         self.init_chart()
 
     def add_new_income(self):
@@ -268,13 +224,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             if self.inputDescriptionIncome.text() != ""
             else "income"
         )
-        acc = self.database.get_acc(acc_name)
-        acc = Account(acc_name, acc[acc_name])
-        acc.add_income(income)
-        self.database.update_acc_balance(acc_name, acc.balance)
-        time_stamp = self.database.add_transaction(
-            acc_name, income, acc.balance, description
-        )
-        self.update_table_accounts_balance(acc_name, acc.balance)
-        self.add_item_table_transactions(time_stamp)
+        services_account.add_income(self.database, acc_name, income, description)
+        accs = services_account.get_all_acc(self.database)
+        self.init_table_accounts(accs)
+        self.init_table_transactions()
         self.init_chart()

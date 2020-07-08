@@ -1,5 +1,6 @@
 from PySide2 import QtWidgets
 
+from ..service_layer import services_account
 from ..gui.dialogDeleteAccount import Ui_dialogDeleteAccount
 
 
@@ -35,7 +36,7 @@ class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
         if acc_name == "NoAccountSaved":
             # add open an popup stating there are no accounts to delete
             return
-        self.parent.database.delete_account_table(acc_name)
+        services_account.delete_acc(self.parent.database, acc_name)
         self.parent.init_gui_with_database()
         for i in range(self.comboChooseAccount.count()):
             if self.comboChooseAccount.itemText(i) == acc_name:

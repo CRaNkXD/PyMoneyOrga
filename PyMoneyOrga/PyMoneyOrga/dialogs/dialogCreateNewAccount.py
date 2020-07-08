@@ -1,5 +1,6 @@
 from PySide2 import QtWidgets
 
+from ..service_layer import services_account
 from ..gui.dialogCreateNewAccount import Ui_dialogCreateNewAccount
 
 
@@ -29,20 +30,8 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
             # add popup stating the initial balance is missing
             return
         balance = int(balance)
-        self.parent.database.add_acc(acc_name, balance)
+        services_account.add_acc(self.parent.database, acc_name, balance)
 
-        currentRowCount = self.parent.tableWidgetAccounts.rowCount() + 1
-        self.parent.tableWidgetAccounts.setRowCount(currentRowCount)
-
-        item_acc_name = QtWidgets.QTableWidgetItem(acc_name)
-        self.parent.tableWidgetAccounts.setItem(currentRowCount - 1, 0, item_acc_name)
-        item_balance = QtWidgets.QTableWidgetItem(str(balance))
-        self.parent.tableWidgetAccounts.setItem(currentRowCount - 1, 1, item_balance)
-
-        # delete the initial combo box item and add a new one for the account
-        if self.parent.comboChooseAccount.currentText() == "NoAccountSaved":
-            self.parent.comboChooseAccount.removeItem(int(0))
-        self.parent.comboChooseAccount.addItem(acc_name)
-
-        self.parent.buttonAddExpenses.setEnabled(True)
-        self.parent.buttonAddIncome.setEnabled(True)
+        accs = services_account.get_all_acc(self.parent.database)
+        self.parent.init_comboChooseAccount(accs)
+        self.parent.init_table_accounts(accs)

@@ -7,7 +7,7 @@ class DatabaseInterface(ABC):
     @abstractmethod
     def __init__(self, file_name):
         self.file_name = file_name
-    
+
     @abstractmethod
     def get_session(self):
         """
@@ -35,7 +35,7 @@ class DatabaseInterface(ABC):
         rollback any changes in the session
         """
         pass
-    
+
     @abstractmethod
     def get_all_acc(self, session):
         """
@@ -46,6 +46,13 @@ class DatabaseInterface(ABC):
 
     @abstractmethod
     def add_acc(self, session, acc_name, balance):
+        """
+        add an account to the the account table and commit to database
+        """
+        pass
+
+    @abstractmethod
+    def delete_acc(self, session, acc_name):
         """
         add an account to the the account table and commit to database
         """
