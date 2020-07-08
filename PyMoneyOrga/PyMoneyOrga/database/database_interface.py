@@ -4,28 +4,58 @@ from abc import ABC, abstractmethod
 class DatabaseInterface(ABC):
     """description of class"""
 
+    @abstractmethod
     def __init__(self, file_name):
         self.file_name = file_name
+    
+    @abstractmethod
+    def get_session(self):
+        """
+        returns a session from the sessionmaker
+        """
+        pass
 
     @abstractmethod
-    def get_all_acc(self):
+    def commit(self, session):
         """
-        returns a dictionary {acc_name:balance} of all saved accounts
+        commits the changes done to the session into the db
+        """
+        pass
+
+    @abstractmethod
+    def close(self, session):
+        """
+        closes the session
+        """
+        pass
+
+    @abstractmethod
+    def rollback(self, session):
+        """
+        rollback any changes in the session
+        """
+        pass
+    
+    @abstractmethod
+    def get_all_acc(self, session):
+        """
+        returns a list of Account objects of all saved accounts
         from the database
         """
         pass
 
     @abstractmethod
-    def add_acc(self, acc_name, balance):
+    def add_acc(self, session, acc_name, balance):
         """
         add an account to the the account table and commit to database
         """
         pass
 
     @abstractmethod
-    def get_acc(self, acc_name):
+    def get_acc(self, session, acc_name):
         """
-        returns an account from the database with the name acc_name
+        returns an Account object from the database.
+        if not existing None
         """
         pass
 

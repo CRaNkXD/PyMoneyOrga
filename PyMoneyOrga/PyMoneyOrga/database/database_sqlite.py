@@ -9,7 +9,7 @@ from sqlalchemy import (
     MetaData,
     Table,
 )
-from sqlalchemy.orm import relationship, mapper, sessionmaker, clear_mappers
+from sqlalchemy.orm import relationship, sessionmaker, mapper, clear_mappers
 import datetime
 
 from ..domain.account import Account, Transaction
@@ -79,7 +79,31 @@ class DatabaseSqlite(DatabaseInterface):
         self.meta_data.create_all()
         clear_mappers()
 
-    def delete_account_table(self, acc_name):
+    def get_session(self):
+        """
+        returns a session from the sessionmaker
+        """
+        return self.Session()
+
+    def commit(self, session):
+        """
+        commits the changes done to the session into the db
+        """
+        session.commit()
+
+    def close(self, session):
+        """
+        closes the session
+        """
+        session.close()
+
+    def rollback(self, session):
+        """
+        rollback any changes in the session
+        """
+        session.rollback()
+
+    def delete_account_table(self, acc_name, session):
         acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
         if acc is None:
             return
@@ -88,25 +112,25 @@ class DatabaseSqlite(DatabaseInterface):
         self.session.delete(acc)
         self.session.commit()
 
-    def get_all_acc(self):
+    def get_all_acc(self, session):
         """
         returns a list of Account objects of all saved accounts
         from the database
         """
-        accs = self.session.query(Account).all()
+        accs = session.query(Account).all()
         return accs
 
-    def add_acc(self, acc_name, balance):
+    def add_acc(self, session, acc_name, balance):
         """add an account to the the account table and commit to database"""
-        self.session.add(Account(acc_name=acc_name, balance=balance))
-        self.session.commit()
+        session.add(Account(acc_name=acc_name, balance=balance))
+        session.commit()
 
-    def get_acc(self, acc_name):
+    def get_acc(self, session, acc_name) -> Account:
         """
         returns an Account object from the database.
         if not existing None
         """
-        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
+        acc = session.query(Account).filter_by(_acc_name=acc_name).first()
         return acc
 
     def update_acc_balance(self, acc_name, new_balance):
