@@ -1,10 +1,12 @@
-from ..database.database_interface import DatabaseInterface
+from PySide2 import QtWidgets
 
-def get_all_acc_names(database : DatabaseInterface):
+def show_info_msg_box(msg):
     """
-    returns a list with all acc names saved in the database
+    shows an info message box with the given message msg
     """
-    session = database.get_session()
-    accs = database.get_all_acc(session)
-    database.close(session)
-    return [acc.acc_name for acc in accs]
+    msg_box = QtWidgets.QMessageBox()
+    msg_box.setIcon(QtWidgets.QMessageBox.Information)
+    msg_box.setText("Info")
+    msg_box.setInformativeText(msg)
+    msg_box.setWindowTitle("Info")
+    msg_box.exec_()
