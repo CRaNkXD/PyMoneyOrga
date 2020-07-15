@@ -1,6 +1,6 @@
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCharts import QtCharts
-from .gui.PyMoneyOrgaGui import Ui_PyMoneyOrgaGui
+from .gui.UIPyMoneyOrgaGui import Ui_PyMoneyOrgaGui
 from .dialogs.dialogDeleteAccount import DialogDeleteAccount
 from .dialogs.dialogCreateNewAccount import DialogCreateNewAccount
 
@@ -15,6 +15,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
 
+        # set the tables to not editable
         self.tableWidgetTransactions.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers
         )
@@ -23,46 +24,54 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         )
 
         self.database = database
+        # variables for storing new windows 
+        # windows can only be opened when the variable is None
+        # like this only one window of the same kind can be opened at the same time
         self.dialog_create_new_acc = None
         self.dialog_delete_acc = None
 
-        # Connect menu button with a custom function (openDialogCreateNewAccount)
+        # connect the buttons with the methods
         self.actionCreate_New_Account.triggered.connect(self.open_dialog_create_new_acc)
-
-        # Connect menu button with a custom function (openDialogDeleteAccount)
         self.actionDeleteAccount.triggered.connect(self.open_dialog_delete_acc)
-
         self.actionExit.triggered.connect(self.close)
-
-        # Connect new expenses button with a custom function (addNewExpenses)
         self.buttonAddExpenses.clicked.connect(self.add_new_expenses)
-
-        # Connect new income button with a custom function (addNewIncome)
         self.buttonAddIncome.clicked.connect(self.add_new_income)
-
         self.comboChooseAccount.currentTextChanged.connect(self.init_table_transactions)
         self.comboChooseAccount.currentTextChanged.connect(self.init_chart)
+        self.checkShowAmount.stateChanged.connect(lambda state: self.toggle_transaction_table_column_vis(state, 1))
+        self.checkShowDescription.stateChanged.connect(lambda state: self.toggle_transaction_table_column_vis(state, 3))
+        self.checkShowNewBalance.stateChanged.connect(lambda state: self.toggle_transaction_table_column_vis(state, 2))
+        self.checkShowTimeStamp.stateChanged.connect(lambda state: self.toggle_transaction_table_column_vis(state, 0))
 
-        self.setup_chart()
+        self._setup_chart()
 
         self.init_gui_with_database()
 
         self.tabWidget.setCurrentIndex(0)
 
     def init_gui_with_database(self):
+        """
+        initialze the whole gui with the database
+        """
         accs = services_account.get_all_acc(self.database)
         self.init_table_accounts(accs)
         self.init_comboChooseAccount(accs)
         self.init_table_transactions()
         self.init_chart()
         if not accs:
-            self.buttonAddExpenses.setEnabled(False)
-            self.buttonAddIncome.setEnabled(False)
+            # if no accounts are saved it is not possible to add income or expense
+            self.enable_buttons(False)
         else:
-            self.buttonAddExpenses.setEnabled(True)
-            self.buttonAddIncome.setEnabled(True)
+            self.enable_buttons(True)
+
+    def enable_buttons(self, enable):
+        self.buttonAddExpenses.setEnabled(enable)
+        self.buttonAddIncome.setEnabled(enable)
 
     def init_comboChooseAccount(self, accs):
+        """
+        initialze the comboChooseAccount with the accounts from the database
+        """
         if accs:
             self.comboChooseAccount.clear()
             for acc in accs:
@@ -72,6 +81,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.comboChooseAccount.addItem("NoAccountSaved")
 
     def init_table_accounts(self, accs):
+        """
+        initialize the account table with the database
+        """
         if accs:
             self.tableWidgetAccounts.setRowCount(len(accs))
             currentRowCount = 0
@@ -86,6 +98,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.tableWidgetAccounts.setRowCount(0)
 
     def init_table_transactions(self):
+        """
+        initialize the transaction table for the specified account with the database
+        account specified by the comboChooseAccount
+        """
         current_acc = self.comboChooseAccount.currentText()
         transactions = services_account.get_transactions(self.database, current_acc)
         if transactions != []:
@@ -118,7 +134,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         else:
             self.tableWidgetTransactions.setRowCount(0)
 
-    def setup_chart(self):
+    def _setup_chart(self):
         """
         setup the chart view by adding it to the widgetChart used as a
         place holder in the qt designer
@@ -142,8 +158,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         # X Axis Settings
         self.axis_x = QtCharts.QValueAxis()
         self.chart.addAxis(self.axis_x, QtCore.Qt.AlignBottom)
-        # self.axis_x.setLabelFormat("dd.MM (h:mm)")
-        self.axis_x.setTitleText("Date")
+        self.axis_x.setTitleText("Transaction")
         self.series.attachAxis(self.axis_x)
 
         # Y Axis Settings
@@ -152,49 +167,65 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.axis_y.setTitleText("Balance")
         self.series.attachAxis(self.axis_y)
 
+        # add hovering tooltips
+        self.point_tool_tip_dict = {}
+        self.series.hovered.connect(self.show_point_tooltip)
+
         self.chartview.setChart(self.chart)
 
     def init_chart(self):
-        # initialize the data for the chart view
+        """
+        initialize the data for the chart view
+        """
         current_acc = self.comboChooseAccount.currentText()
         transactions = services_account.get_transactions(self.database, current_acc)
         self.series.clear()
         if transactions != []:
-            # x_max = transactions[0].id
-            # x_min = transactions[0].id
-            y_min = transactions[0].new_balance
-            y_max = transactions[0].new_balance
+            # initialize the graph with the starting balance
             x = 0
+            y = transactions[0].new_balance - transactions[0].amount
+            self.series.append(x, y)
+
+            y_min = transactions[0].new_balance - transactions[0].amount
+            y_max = transactions[0].new_balance - transactions[0].amount
             for transaction in transactions:
-                # x = transaction.id
                 x += 1
                 y = transaction.new_balance
-                # x_max = max(x_max, x)
-                # x_min = min(x_min, x)
                 y_max = max(y_max, y)
                 y_min = min(y_min, y)
                 self.series.append(x, y)
 
-            # self.axis_x.setMin(x_min)
-            # self.axis_x.setMax(x_max)
             self.axis_x.setMin(0)
             self.axis_x.setMax(x)
             self.axis_y.setMin(y_min)
             self.axis_y.setMax(y_max)
+            
+            self.series.setPointsVisible(True)
 
         self.chartview.repaint()
 
     def open_dialog_create_new_acc(self):
+        """
+        opens the dialog for creating a new account
+        """
         if self.dialog_create_new_acc is None:
             self.dialog_create_new_acc = DialogCreateNewAccount(self)
             self.dialog_create_new_acc.show()
 
     def open_dialog_delete_acc(self):
+        """
+        opens the dialog for deleting an account
+        """
         if self.dialog_delete_acc is None:
             self.dialog_delete_acc = DialogDeleteAccount(self)
             self.dialog_delete_acc.show()
 
     def add_new_expenses(self):
+        """
+        adds an expense to an account
+        expense sepccifed by the inputAddExpenses
+        account specified by the comboChooseAccount
+        """
         acc_name = self.comboChooseAccount.currentText()
         if self.inputAddExpenses.text() != "":
             expense = int(self.inputAddExpenses.text())
@@ -213,6 +244,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.init_chart()
 
     def add_new_income(self):
+        """
+        adds an income to an account
+        expense sepccifed by the inputAddIncome
+        account specified by the comboChooseAccount
+        """
         acc_name = self.comboChooseAccount.currentText()
         if self.inputAddIncome.text() != "":
             income = int(self.inputAddIncome.text())
@@ -229,3 +265,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.init_table_accounts(accs)
         self.init_table_transactions()
         self.init_chart()
+
+    def toggle_transaction_table_column_vis(self, state, column):
+        if state == 0:
+            self.tableWidgetTransactions.setColumnHidden(column, True)
+        else:
+           self.tableWidgetTransactions. setColumnHidden(column, False)
+
+    def show_point_tooltip(self, point : QtCore.QPointF, state : bool):
+        point_coord = self.chart.mapToPosition(point)
+        point_coord = self.chart.mapToScene(point_coord)
+        mouse_box = QtCore.QRect(point_coord.toPoint() - QtCore.QPoint(10,10),
+                                 point_coord.toPoint() + QtCore.QPoint(10,10))
+        print(mouse_box)
+        for data_point in self.series.points():
+            data_point_coord = self.chart.mapToPosition(data_point)
+            data_point_coord = self.chart.mapToScene(data_point_coord)
+            if mouse_box.contains(data_point_coord.toPoint()):
+                if str(data_point_coord) not in self.point_tool_tip_dict and self.point_tool_tip_dict:
+                    print("remove item")
+                    print(data_point.toPoint())
+                    for key in self.point_tool_tip_dict:
+                        self.chart.scene().removeItem(self.point_tool_tip_dict[key])
+                    
+                    self.point_tool_tip_dict = {}
+
+                if not self.point_tool_tip_dict:
+                    print(data_point.toPoint())
+                    point_tool_tip = QtWidgets.QGraphicsSimpleTextItem()
+                    point_tool_tip.setText("Transaction: " + str(data_point.toPoint().x()) + " " + "Balance: " + str(data_point.toPoint().y()))
+
+                    point_tool_tip.setPos(data_point_coord - QtCore.QPoint(30,30))
+                    print("add item")
+                    self.chart.scene().addItem(point_tool_tip)
+                    self.point_tool_tip_dict[str(data_point_coord)] = point_tool_tip
+                break
