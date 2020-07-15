@@ -1,7 +1,7 @@
 from PySide2 import QtWidgets
 
-from ..service_layer import services_account
-from ..gui.dialogDeleteAccount import Ui_dialogDeleteAccount
+from ..service_layer import services_account, services_gui
+from ..gui.UIdialogDeleteAccount import Ui_dialogDeleteAccount
 
 
 class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
@@ -14,7 +14,7 @@ class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
         self.setupUi(self)
         self.parent = parent
 
-        # Connect add button with a custom function
+        # connect the buttons with the methods
         self.buttonDeleteAccount.clicked.connect(self.delete_acc)
         self.buttonCancel.clicked.connect(self.close)
 
@@ -29,13 +29,18 @@ class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
                 self.comboChooseAccount.addItem(text)
 
     def closeEvent(self, event):
+        """
+        sets the variable containing the dialog to None if the dialog is closed
+        this allows the dialog to be opened again
+        """
         self.parent.dialog_delete_acc = None
 
     def delete_acc(self):
         acc_name = self.comboChooseAccount.currentText()
         if acc_name == "NoAccountSaved":
-            # add open an popup stating there are no accounts to delete
+            services_gui.show_info_msg_box("There are no accounts to delete!")
             return
+
         services_account.delete_acc(self.parent.database, acc_name)
         self.parent.init_gui_with_database()
         for i in range(self.comboChooseAccount.count()):
@@ -44,3 +49,4 @@ class DialogDeleteAccount(QtWidgets.QDialog, Ui_dialogDeleteAccount):
 
         if self.comboChooseAccount.count() == 0:
             self.comboChooseAccount.addItem("NoAccountSaved")
+            self.parent.enable_buttons(False)

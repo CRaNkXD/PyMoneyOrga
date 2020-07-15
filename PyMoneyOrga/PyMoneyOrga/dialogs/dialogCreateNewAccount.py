@@ -1,7 +1,7 @@
 from PySide2 import QtWidgets
 
-from ..service_layer import services_account
-from ..gui.dialogCreateNewAccount import Ui_dialogCreateNewAccount
+from ..service_layer import services_account, services_gui
+from ..gui.UIdialogCreateNewAccount import Ui_dialogCreateNewAccount
 
 
 class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
@@ -18,20 +18,38 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         self.buttonAddNewAccount.clicked.connect(self.add_acc)
 
     def closeEvent(self, event):
+        """
+        sets the variable containing the dialog to None if the dialog is closed
+        this allows the dialog to be opened again
+        """
         self.parent.dialog_create_new_acc = None
 
     def add_acc(self):
+        """
+        adds an account to the database
+        acc_name is specified by inputAccountName
+        balance is specified by inputInitialAmount
+        """
         acc_name = str(self.inputAccountName.text())
+        info_list = []
         if acc_name == "":
-            # add popup stating the acc name is missing
-            return
+            info_list.append("Account name is not specified!")
+
         balance = self.inputInitialAmount.text()
         if balance == "":
-            # add popup stating the initial balance is missing
+            info_list.append("Initial balance is not specified!")
+
+        if info_list != []:
+            info_msg = ""
+            for msg in info_list:
+                info_msg += msg + "\n"
+            services_gui.show_info_msg_box(info_msg)
             return
+
         balance = int(balance)
         services_account.add_acc(self.parent.database, acc_name, balance)
 
         accs = services_account.get_all_acc(self.parent.database)
         self.parent.init_comboChooseAccount(accs)
         self.parent.init_table_accounts(accs)
+        self.parent.enable_buttons(True)
