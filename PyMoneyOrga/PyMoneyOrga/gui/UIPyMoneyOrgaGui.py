@@ -89,21 +89,25 @@ class Ui_PyMoneyOrgaGui(object):
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.checkShowAmount = QCheckBox(self.tabTableView)
         self.checkShowAmount.setObjectName(u"checkShowAmount")
+        self.checkShowAmount.setChecked(True)
 
         self.gridLayout_12.addWidget(self.checkShowAmount, 2, 0, 1, 1)
 
         self.checkShowTimeStamp = QCheckBox(self.tabTableView)
         self.checkShowTimeStamp.setObjectName(u"checkShowTimeStamp")
+        self.checkShowTimeStamp.setChecked(True)
 
         self.gridLayout_12.addWidget(self.checkShowTimeStamp, 1, 0, 1, 1)
 
         self.checkShowNewBalance = QCheckBox(self.tabTableView)
         self.checkShowNewBalance.setObjectName(u"checkShowNewBalance")
+        self.checkShowNewBalance.setChecked(True)
 
         self.gridLayout_12.addWidget(self.checkShowNewBalance, 1, 1, 1, 1)
 
         self.checkShowDescription = QCheckBox(self.tabTableView)
         self.checkShowDescription.setObjectName(u"checkShowDescription")
+        self.checkShowDescription.setChecked(True)
 
         self.gridLayout_12.addWidget(self.checkShowDescription, 2, 1, 1, 1)
 
@@ -250,7 +254,7 @@ class Ui_PyMoneyOrgaGui(object):
 
         self.retranslateUi(PyMoneyOrgaGui)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(PyMoneyOrgaGui)
