@@ -277,26 +277,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         point_coord = self.chart.mapToScene(point_coord)
         mouse_box = QtCore.QRect(point_coord.toPoint() - QtCore.QPoint(10,10),
                                  point_coord.toPoint() + QtCore.QPoint(10,10))
-        print(mouse_box)
+        #print(mouse_box)
         for data_point in self.series.points():
             data_point_coord = self.chart.mapToPosition(data_point)
             data_point_coord = self.chart.mapToScene(data_point_coord)
             if mouse_box.contains(data_point_coord.toPoint()):
                 if str(data_point_coord) not in self.point_tool_tip_dict and self.point_tool_tip_dict:
-                    print("remove item")
-                    print(data_point.toPoint())
+                    #print("remove item")
+                    #print(data_point.toPoint())
                     for key in self.point_tool_tip_dict:
                         self.chart.scene().removeItem(self.point_tool_tip_dict[key])
                     
                     self.point_tool_tip_dict = {}
 
                 if not self.point_tool_tip_dict:
-                    print(data_point.toPoint())
+                    #print(data_point.toPoint())
                     point_tool_tip = QtWidgets.QGraphicsSimpleTextItem()
                     point_tool_tip.setText("Transaction: " + str(data_point.toPoint().x()) + " " + "Balance: " + str(data_point.toPoint().y()))
 
                     point_tool_tip.setPos(data_point_coord - QtCore.QPoint(30,30))
-                    print("add item")
+                    #print("add item")
                     self.chart.scene().addItem(point_tool_tip)
                     self.point_tool_tip_dict[str(data_point_coord)] = point_tool_tip
                 break
