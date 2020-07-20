@@ -14,3 +14,5 @@ pip install requirements.txt
 * Visualize the the cash flow over a day\week\month\year
 * ...
 
+## License
+This repository uses the [MIT License](/LICENSE).
