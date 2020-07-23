@@ -22,6 +22,12 @@ class DatabaseInterface(ABC):
         """
         pass
 
+    def expunge(self, session):
+        """
+        kepp access to all items after expiring
+        """
+        pass
+
     @abstractmethod
     def close(self, session):
         """

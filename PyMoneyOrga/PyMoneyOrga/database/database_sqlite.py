@@ -11,6 +11,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship, sessionmaker, mapper, clear_mappers
 import datetime
+from contextlib import contextmanager
 
 from ..domain.account import Account, Transaction
 from .database_interface import DatabaseInterface
@@ -79,17 +80,32 @@ class DatabaseSqlite(DatabaseInterface):
         self.meta_data.create_all()
         clear_mappers()
 
+    @contextmanager
     def get_session(self):
         """
         returns a session from the sessionmaker
         """
-        return self.Session()
+        session = self.Session()
+        try:
+            yield session
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
 
     def commit(self, session):
         """
         commits the changes done to the session into the db
         """
         session.commit()
+
+    def expunge_all(self, session):
+        """
+        kepp access to all items after expiring
+        """
+        session.expunge_all()
 
     def close(self, session):
         """
@@ -122,7 +138,6 @@ class DatabaseSqlite(DatabaseInterface):
     def add_acc(self, session, acc_name, balance):
         """add an account to the the account table and commit to database"""
         session.add(Account(acc_name=acc_name, balance=balance))
-        session.commit()
 
     def get_acc(self, session, acc_name) -> Account:
         """
@@ -140,7 +155,6 @@ class DatabaseSqlite(DatabaseInterface):
             # raise exception
         else:
             acc.balance = new_balance
-            self.session.commit()
 
     def add_transaction(self, acc_name, amount, new_balance, description):
         """
@@ -162,5 +176,4 @@ class DatabaseSqlite(DatabaseInterface):
                     description=description,
                 )
             )
-            self.session.commit()
             return time_stamp
