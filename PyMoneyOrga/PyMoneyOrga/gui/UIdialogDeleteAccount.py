@@ -20,7 +20,7 @@ class Ui_dialogDeleteAccount(object):
     def setupUi(self, dialogDeleteAccount):
         if not dialogDeleteAccount.objectName():
             dialogDeleteAccount.setObjectName(u"dialogDeleteAccount")
-        dialogDeleteAccount.resize(486, 148)
+        dialogDeleteAccount.resize(386, 128)
         self.gridLayout_2 = QGridLayout(dialogDeleteAccount)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout = QGridLayout()
@@ -31,7 +31,7 @@ class Ui_dialogDeleteAccount(object):
 
         self.gridLayout.addWidget(self.comboChooseAccount, 1, 0, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 30, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer, 2, 0, 1, 1)
 
@@ -49,7 +49,7 @@ class Ui_dialogDeleteAccount(object):
 
         self.gridLayout_4.addWidget(self.buttonCancel, 1, 2, 1, 1)
 
-        self.horizontalSpacer = QSpacerItem(300, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(200, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.gridLayout_4.addItem(self.horizontalSpacer, 1, 0, 1, 1)
 
