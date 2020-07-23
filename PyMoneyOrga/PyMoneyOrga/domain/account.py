@@ -4,6 +4,9 @@ import datetime
 
 @dataclass
 class Transaction(object):
+    """
+    Data class for transactions made from and to an account. Used in Account class.
+    """
     amount: int
     new_balance: int
     description: str
@@ -13,7 +16,7 @@ class Transaction(object):
 
 class Account(object):
     """
-    Combines a name with a balance value
+    Class for defining an account.
     """
 
     def __init__(self, acc_name, balance, transactions=None):
@@ -24,12 +27,15 @@ class Account(object):
         self._transactions = transactions  # list of Transaction objects
 
     def __str__(self):
-        return f"Account Name: {self._acc_name}; Money in Account: {self._balance} €"
+        return f"Account Name: {self._acc_name}; Money in Account: {self._balance}"
 
     def __repr__(self):
-        return f"Account Name: {self._acc_name}; Money in Account: {self._balance} €"
+        return f"Account Name: {self._acc_name}; Money in Account: {self._balance}"
 
     def add_income(self, amount, description=None):
+        """
+        Adds an income to the account which is than saved in the transactions list.
+        """
         if description is None:
             description = "income"
         self._balance += amount
@@ -43,6 +49,9 @@ class Account(object):
         )
 
     def add_expense(self, amount, description=None):
+        """
+        Adds an expense to the account which is than saved in the transactions list.
+        """
         if description is None:
             description = "expense"
         self._balance -= amount
