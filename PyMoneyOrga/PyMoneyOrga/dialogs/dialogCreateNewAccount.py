@@ -14,6 +14,7 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         self.setupUi(self)
         self.parent = parent
 
+        self.comboCurrency.addItems(services_gui.valid_currencies())
         # Connect add button with a custom function (addAcc)
         self.buttonAddNewAccount.clicked.connect(self.add_acc)
 
@@ -35,7 +36,7 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         if acc_name == "":
             info_list.append("Account name is not specified!")
 
-        balance = self.inputInitialAmount.text()
+        balance = self.inputInitialBalance.text()
         if balance == "":
             info_list.append("Initial balance is not specified!")
 
