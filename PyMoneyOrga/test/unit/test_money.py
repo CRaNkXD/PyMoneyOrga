@@ -13,7 +13,7 @@ class TestMoney(unittest.TestCase):
 
     def test_convert(self):
         money_usd = Money.convert_to(self.money, "USD")
-        self.assertEqual(money_usd.amount, 100 * Money._VALID_CURRENCIES["USD"])
+        self.assertEqual(money_usd.amount, 100 * Money.VALID_CURRENCIES["USD"])
         self.assertEqual(money_usd.currency, "USD")
 
 
