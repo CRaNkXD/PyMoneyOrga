@@ -71,18 +71,3 @@ class DatabaseInterface(ABC):
         if not existing None
         """
         pass
-
-    @abstractmethod
-    def update_acc_balance(self, acc_name, new_balance):
-        """
-        update the balance of an account in the database
-        """
-        pass
-
-    @abstractmethod
-    def add_transaction(self, acc_name, amount, new_balance, description):
-        """
-        add a transaction to the the transaction table and commit to
-        database
-        """
-        pass

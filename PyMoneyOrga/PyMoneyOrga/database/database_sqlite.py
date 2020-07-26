@@ -146,34 +146,3 @@ class DatabaseSqlite(DatabaseInterface):
         """
         acc = session.query(Account).filter_by(_acc_name=acc_name).first()
         return acc
-
-    def update_acc_balance(self, acc_name, new_balance):
-        """get an account from the database"""
-        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
-        if acc is None:
-            pass
-            # raise exception
-        else:
-            acc.balance = new_balance
-
-    def add_transaction(self, acc_name, amount, new_balance, description):
-        """
-        add a transaction to the transaction table and commit to
-        database. return the time stamp used to save the transaction
-        """
-        acc = self.session.query(Account).filter_by(_acc_name=acc_name).first()
-        if acc is None:
-            # raise exception
-            return None
-        else:
-            time_stamp = datetime.datetime.now()
-            self.session.add(
-                Transaction(
-                    account_id=acc.id,
-                    amount=amount,
-                    new_balance=new_balance,
-                    time_stamp=time_stamp,
-                    description=description,
-                )
-            )
-            return time_stamp
