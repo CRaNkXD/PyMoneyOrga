@@ -7,11 +7,12 @@ class Transaction(object):
     """
     Data class for transactions made from and to an account. Used in Account class.
     """
+
     amount: int
     new_balance: int
     description: str
     time_stamp: datetime.datetime
-    account_id: int = None # foreign key to Account
+    account_id: int = None  # foreign key to Account
 
 
 class Account(object):
