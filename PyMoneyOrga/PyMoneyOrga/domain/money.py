@@ -4,6 +4,13 @@ class Money(object):
     # The base currency is euro
     VALID_CURRENCIES = {"EUR": 1.0, "USD": 1.14}
 
+    @classmethod
+    def convert_to(cls, money: "Money", new_currency):
+        if new_currency not in cls.VALID_CURRENCIES:
+            print(f"The currency {new_currency} is not valid or not implemented!")
+        euro = money.amount // cls.VALID_CURRENCIES[money.currency]
+        return cls(euro * cls.VALID_CURRENCIES[new_currency], new_currency)
+
     def __init__(self, amount, currency="EUR"):
         if currency not in Money.VALID_CURRENCIES:
             print(f"The currency {currency} is not valid or not implemented!")
@@ -154,10 +161,3 @@ class Money(object):
     @property
     def currency(self):
         return self._currency
-
-    @classmethod
-    def convert_to(cls, money: "Money", new_currency):
-        if new_currency not in cls.VALID_CURRENCIES:
-            print(f"The currency {new_currency} is not valid or not implemented!")
-        euro = money.amount // cls.VALID_CURRENCIES[money.currency]
-        return cls(euro * cls.VALID_CURRENCIES[new_currency], new_currency)
