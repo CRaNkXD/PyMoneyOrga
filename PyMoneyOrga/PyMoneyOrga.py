@@ -11,4 +11,4 @@ if __name__ == "__main__":
     prog = MainWindow(database)
 
     prog.show()
-    sys.exit(app.exec_())
+    app.exec_()
