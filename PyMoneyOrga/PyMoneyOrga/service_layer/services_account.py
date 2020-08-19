@@ -5,6 +5,9 @@ def add_income(database: DatabaseInterface, acc_name, amount, description=None):
     """
     adds an income to the specified account in the database
     """
+    if description is None:
+        description = "income"
+
     with database.get_session() as session:
         acc = database.get_acc(session, acc_name)
         acc.add_income(amount, description)
@@ -14,6 +17,9 @@ def add_expense(database: DatabaseInterface, acc_name, amount, description=None)
     """
     adds an expense to the specified account in the database
     """
+    if description is None:
+        description = "expense"
+
     with database.get_session() as session:
         acc = database.get_acc(session, acc_name)
         acc.add_expense(amount, description)
@@ -59,16 +65,17 @@ def get_acc(database: DatabaseInterface, acc_name):
     return acc
 
 
-def get_transactions(database: DatabaseInterface, acc_name):
+def get_transactions(
+    database: DatabaseInterface, acc_name, reverse=False, max_length=-1, offset=0
+):
     """
     returns all transactions from the specified account
     if not existent returns an empty list []
     """
     with database.get_session() as session:
-        acc = database.get_acc(session, acc_name)
-        if acc is None:
-            return []
-        transactions = acc.transactions
+        transactions = database.get_transactions(
+            session, acc_name, reverse, max_length, offset
+        )
         database.expunge_all(session)
 
     return transactions

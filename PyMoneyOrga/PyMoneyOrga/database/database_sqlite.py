@@ -139,10 +139,62 @@ class DatabaseSqlite(DatabaseInterface):
         """add an account to the the account table and commit to database"""
         session.add(Account(acc_name=acc_name, balance=balance))
 
-    def get_acc(self, session, acc_name) -> Account:
+    def get_acc(self, session, acc_name):
         """
         returns an Account object from the database.
         if not existing None
         """
         acc = session.query(Account).filter_by(_acc_name=acc_name).first()
         return acc
+
+    def get_transactions(
+        self, session, acc_name, reverse=False, max_length=-1, offset=0
+    ):
+        """
+        returns a list of transactions from the specified account. 
+        max_length specifies the max length of the list.
+        reverse specifies if the newest transactions will be listed first.
+        if not existing [].
+        """
+        if reverse and max_length > 0:
+            transactions = (
+                session.query(Transaction)
+                .join(Account)
+                .filter(Account._acc_name == acc_name)
+                .order_by(Transaction.time_stamp.desc())
+                .offset(offset)
+                .limit(max_length)
+                .all()
+            )
+        elif reverse and max_length == -1:
+            transactions = (
+                session.query(Transaction)
+                .join(Account)
+                .filter(Account._acc_name == acc_name)
+                .order_by(Transaction.time_stamp.desc())
+                .offset(offset)
+                .all()
+            )
+        elif not reverse and max_length > 0:
+            transactions = (
+                session.query(Transaction)
+                .join(Account)
+                .filter(Account._acc_name == acc_name)
+                .order_by(Transaction.time_stamp)
+                .offset(offset)
+                .limit(max_length)
+                .all()
+            )
+        elif not reverse and max_length == -1:
+            transactions = (
+                session.query(Transaction)
+                .join(Account)
+                .filter(Account._acc_name == acc_name)
+                .order_by(Transaction.time_stamp)
+                .offset(offset)
+                .all()
+            )
+        else:
+            pass
+
+        return transactions

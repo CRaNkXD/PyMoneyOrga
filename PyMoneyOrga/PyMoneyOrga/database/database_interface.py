@@ -71,3 +71,15 @@ class DatabaseInterface(ABC):
         if not existing None
         """
         pass
+
+    @abstractmethod
+    def get_transactions(
+        self, session, acc_name, reverse=False, max_length=-1, offset=0
+    ):
+        """
+        returns a list of transactions from the specified account. 
+        max_length specifies the max length of the list.
+        reverse specifies if the newest transactions will be listed first.
+        if not existing [].
+        """
+        pass
