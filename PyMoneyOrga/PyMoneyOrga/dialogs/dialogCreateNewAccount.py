@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 
 from ..service_layer import services_account, services_gui
 from ..gui.UIdialogCreateNewAccount import Ui_dialogCreateNewAccount
@@ -15,6 +15,12 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         self.parent = parent
 
         self.comboCurrency.addItems(services_gui.valid_currencies())
+
+        # set the line edit so it only accepts double values
+        dvBalance = QtGui.QDoubleValidator(0.0, 10.0**100, 2, self.inputInitialBalance)
+        dvBalance.setNotation(QtGui.QDoubleValidator.StandardNotation)
+        self.inputInitialBalance.setValidator(dvBalance)
+
         # Connect add button with a custom function (addAcc)
         self.buttonAddNewAccount.clicked.connect(self.add_acc)
 
@@ -33,8 +39,14 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
         """
         acc_name = str(self.inputAccountName.text())
         info_list = []
+        accs = services_account.get_all_acc(self.parent.database)
+
         if acc_name == "":
             info_list.append("Account name is not specified!")
+        else:
+            for acc in accs:
+                if acc_name == acc.acc_name:
+                    info_list.append("Account name does already exist!")
 
         balance = self.inputInitialBalance.text()
         if balance == "":
@@ -47,7 +59,7 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
             services_gui.show_info_msg_box(info_msg)
             return
 
-        balance = int(balance)
+        balance = int(float(balance.replace(",","."))*100)
         services_account.add_acc(self.parent.database, acc_name, balance)
 
         accs = services_account.get_all_acc(self.parent.database)
