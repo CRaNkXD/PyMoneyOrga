@@ -60,15 +60,21 @@ class TestDatabaseSqlite(unittest.TestCase):
             time.sleep(0.001)
             acc.add_income(100, "income3")
 
-            transactions = self.database.get_transactions(session, self.acc_name_1, False, 2)
+            transactions = self.database.get_transactions(
+                session, self.acc_name_1, False, 2
+            )
             self.assertEqual(transactions[0].new_balance, 200)
             self.assertEqual(len(transactions), 2)
 
-            transactions = self.database.get_transactions(session, self.acc_name_1, True, 50)
+            transactions = self.database.get_transactions(
+                session, self.acc_name_1, True, 50
+            )
             self.assertEqual(transactions[0].new_balance, 400)
             self.assertEqual(len(transactions), 3)
 
-            transactions = self.database.get_transactions(session, self.acc_name_1, False, 2, 1)
+            transactions = self.database.get_transactions(
+                session, self.acc_name_1, False, 2, 1
+            )
             self.assertEqual(transactions[0].new_balance, 300)
 
     def tearDown(self):
