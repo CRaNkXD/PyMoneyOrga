@@ -1,4 +1,7 @@
 import unittest
+import time
+from timeit import default_timer as timer
+import timeit
 from PyMoneyOrga.database.database_sqlite import DatabaseSqlite
 
 
@@ -41,6 +44,32 @@ class TestDatabaseSqlite(unittest.TestCase):
         with self.database.get_session() as session:
             acc = self.database.get_acc(session, self.acc_name_1)
             self.assertEqual(acc, None)
+
+    def test_get_transactions(self):
+        """
+        tests if get_transactions returns the
+        specified transactions in the right order with the specified amount
+        """
+        with self.database.get_session() as session:
+            self.database.add_acc(session, self.acc_name_1, 100)
+            self.database.commit(session)
+            acc = self.database.get_acc(session, self.acc_name_1)
+            acc.add_income(100, "income1")
+            time.sleep(0.001)
+            acc.add_income(100, "income2")
+            time.sleep(0.001)
+            acc.add_income(100, "income3")
+
+            transactions = self.database.get_transactions(session, self.acc_name_1, False, 2)
+            self.assertEqual(transactions[0].new_balance, 200)
+            self.assertEqual(len(transactions), 2)
+
+            transactions = self.database.get_transactions(session, self.acc_name_1, True, 50)
+            self.assertEqual(transactions[0].new_balance, 400)
+            self.assertEqual(len(transactions), 3)
+
+            transactions = self.database.get_transactions(session, self.acc_name_1, False, 2, 1)
+            self.assertEqual(transactions[0].new_balance, 300)
 
     def tearDown(self):
         self.database._clear_all_tables()

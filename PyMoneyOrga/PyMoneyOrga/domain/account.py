@@ -33,12 +33,10 @@ class Account(object):
     def __repr__(self):
         return f"Account Name: {self._acc_name}; Money in Account: {self._balance}"
 
-    def add_income(self, amount, description=None):
+    def add_income(self, amount, description):
         """
         Adds an income to the account which is than saved in the transactions list.
         """
-        if description is None:
-            description = "income"
         self._balance += amount
         self.transactions.append(
             Transaction(
@@ -49,12 +47,10 @@ class Account(object):
             )
         )
 
-    def add_expense(self, amount, description=None):
+    def add_expense(self, amount, description):
         """
         Adds an expense to the account which is than saved in the transactions list.
         """
-        if description is None:
-            description = "expense"
         self._balance -= amount
         self.transactions.append(
             Transaction(
