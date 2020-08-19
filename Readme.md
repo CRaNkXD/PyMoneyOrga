@@ -12,7 +12,10 @@ pip install requirements.txt
 * Actually good implementation of the tool tip
 * Tool for importing your pdf account statements
 * Visualize the the cash flow over a day\week\month\year
-* ...
+* better unittests coverage
+
+## Known Issues
+* Crash when using FloatDelegate on the New balance column (main_window.py)
 
 ## License
 This repository uses the [MIT License](/LICENSE).
