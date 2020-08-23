@@ -20,11 +20,12 @@ class Account(object):
     Class for defining an account.
     """
 
-    def __init__(self, acc_name, balance, transactions=None):
+    def __init__(self, acc_name, balance, currency, transactions=None):
         if transactions is None:
             transactions = []
         self._acc_name = acc_name
         self._balance = balance
+        self._currency = currency
         self._transactions = transactions  # list of Transaction objects
 
     def __str__(self):
@@ -65,9 +66,17 @@ class Account(object):
     def balance(self):
         return self._balance
 
+    @balance.setter
+    def balance(self, balance):
+        self._balance = balance
+
     @property
     def acc_name(self):
         return self._acc_name
+
+    @property
+    def currency(self):
+        return self._currency
 
     @property
     def transactions(self):
