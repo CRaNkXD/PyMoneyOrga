@@ -60,7 +60,8 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
             return
 
         balance = int(float(balance.replace(",","."))*100)
-        services_account.add_acc(self.parent.database, acc_name, balance)
+        currency = self.comboCurrency.currentText()
+        services_account.add_acc(self.parent.database, acc_name, balance, currency)
 
         accs = services_account.get_all_acc(self.parent.database)
         self.parent.init_comboChooseAccount(accs)
