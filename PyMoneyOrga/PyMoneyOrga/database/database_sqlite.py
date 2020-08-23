@@ -44,6 +44,7 @@ class DatabaseSqlite(DatabaseInterface):
             Column("id", Integer, primary_key=True, autoincrement=True),
             Column("_acc_name", String(50), nullable=False),
             Column("_balance", BigInteger, nullable=False),
+            Column("_currency", String(3), nullable=False),
         )
 
         transaction = Table(
@@ -135,9 +136,9 @@ class DatabaseSqlite(DatabaseInterface):
         accs = session.query(Account).all()
         return accs
 
-    def add_acc(self, session, acc_name, balance):
+    def add_acc(self, session, acc_name, balance, currency):
         """add an account to the the account table and commit to database"""
-        session.add(Account(acc_name=acc_name, balance=balance))
+        session.add(Account(acc_name=acc_name, balance=balance, currency=currency))
 
     def get_acc(self, session, acc_name):
         """
@@ -146,6 +147,21 @@ class DatabaseSqlite(DatabaseInterface):
         """
         acc = session.query(Account).filter_by(_acc_name=acc_name).first()
         return acc
+
+    def delete_last_transaction(self, session, acc_name):
+        """
+        delete the last transaction from the specified acc
+        """
+        transaction = (
+                session.query(Transaction)
+                .join(Account)
+                .filter(Account._acc_name == acc_name)
+                .order_by(Transaction.time_stamp.desc())
+                .first()
+            )
+        # you have to call the delete method on the session otherwise it is
+        # called on the querry and the cascade options will not be used
+        session.delete(transaction)
 
     def get_transactions(
         self, session, acc_name, reverse=False, max_length=-1, offset=0
