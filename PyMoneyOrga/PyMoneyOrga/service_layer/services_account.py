@@ -25,12 +25,12 @@ def add_expense(database: DatabaseInterface, acc_name, amount, description=None)
         acc.add_expense(amount, description)
 
 
-def add_acc(database: DatabaseInterface, acc_name, balance):
+def add_acc(database: DatabaseInterface, acc_name, balance, currency):
     """
     adds a new account to the database
     """
     with database.get_session() as session:
-        database.add_acc(session, acc_name, balance)
+        database.add_acc(session, acc_name, balance, currency)
 
 
 def delete_acc(database: DatabaseInterface, acc_name):
@@ -79,3 +79,28 @@ def get_transactions(
         database.expunge_all(session)
 
     return transactions
+
+def undo_last_transaction(database: DatabaseInterface, acc_name):
+    """
+    undoes the last transaction from the specified acc if there is one
+    """
+    with database.get_session() as session:
+        acc = database.get_acc(session, acc_name)
+        if acc.transactions:
+            acc.balance -= acc.transactions[-1].amount
+            database.delete_last_transaction(session, acc_name)
+
+
+def get_currency(database: DatabaseInterface, acc_name):
+    """
+    returns the currency of the specified account
+    """
+    with database.get_session() as session:
+        acc = database.get_acc(session, acc_name)
+        # workaround for call of init_chart when the combo box is cleared and no account name is specified
+        if acc is None:
+            currency = ""
+        else:
+            currency = acc.currency
+
+    return currency
