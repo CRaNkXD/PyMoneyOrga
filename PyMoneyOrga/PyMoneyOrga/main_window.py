@@ -32,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
 
         # set the tables text format
         self.tableWidgetAccounts.setItemDelegateForColumn(1, FloatDelegate())
+        # cannot use the FloatDelegate for the New balance. Maybe a Pyside Bug or sth. I do not understand right now.
         # self.tableWidgetTransactions.setItemDelegateForColumn(self.__COLUMN_NEWBALANCE, FloatDelegate())
         self.tableWidgetTransactions.setItemDelegateForColumn(
             self.__COLUMN_AMOUNT, FloatDelegate()
@@ -58,6 +59,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.actionExit.triggered.connect(self.close)
         self.buttonAddExpenses.clicked.connect(self.add_new_expenses)
         self.buttonAddIncome.clicked.connect(self.add_new_income)
+        self.buttonUndo.clicked.connect (self.undo_last_transaction)
         self.comboChooseAccount.currentTextChanged.connect(self.init_table_transactions)
         self.comboChooseAccount.currentTextChanged.connect(self.init_chart)
         self.checkShowAmount.stateChanged.connect(
@@ -103,8 +105,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
             self.enable_buttons(True)
 
     def enable_buttons(self, enable):
+        """
+        enables or disables the buttons
+        """
         self.buttonAddExpenses.setEnabled(enable)
         self.buttonAddIncome.setEnabled(enable)
+        self.buttonUndo.setEnabled(enable)
 
     def init_comboChooseAccount(self, accs):
         """
@@ -222,6 +228,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         initialize the data for the chart view
         """
         current_acc = self.comboChooseAccount.currentText()
+        if current_acc == "NoAccountSaved":
+            return
+        currency = services_account.get_currency(self.database, current_acc)
+        self.axis_y.setTitleText(f"Balance in {currency}")
+
         transactions = services_account.get_transactions(self.database, current_acc)
         self.series.clear()
         if transactions != []:
@@ -307,6 +318,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         )
         income = int(float(income.replace(",", ".")) * 100)
         services_account.add_income(self.database, acc_name, income, description)
+        accs = services_account.get_all_acc(self.database)
+        self.init_table_accounts(accs)
+        self.init_table_transactions()
+        self.init_chart()
+
+    def undo_last_transaction(self):
+        """
+        undoes the last transaction from the specified acc
+        """
+        acc_name = self.comboChooseAccount.currentText()
+        services_account.undo_last_transaction(self.database, acc_name)
         accs = services_account.get_all_acc(self.database)
         self.init_table_accounts(accs)
         self.init_table_transactions()
