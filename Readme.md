@@ -8,6 +8,11 @@ To install this software clone this repository and use the following command to 
 pip install requirements.txt
 ```
 
+## Screenshots
+![Alt text](Screenshots/Add_account.PNG?raw=true "Add a new account")
+![Alt text](Screenshots/Transaction_table.PNG?raw=true "Transactions table")
+![Alt text](Screenshots/Graph.PNG?raw=true "Graphical view of the transactions")
+
 ## To be implemented
 * Actually good implementation of the tool tip
 * Tool for importing your pdf account statements
