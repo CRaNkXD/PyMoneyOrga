@@ -22,7 +22,8 @@ class DatabaseInterface(ABC):
         """
         pass
 
-    def expunge(self, session):
+    @abstractmethod
+    def expunge_all(self, session):
         """
         kepp access to all items after expiring
         """
@@ -69,6 +70,13 @@ class DatabaseInterface(ABC):
         """
         returns an Account object from the database.
         if not existing None
+        """
+        pass
+
+    @abstractmethod
+    def delete_last_transaction(self, session, acc_name):
+        """
+        delete the last transaction from the specified acc
         """
         pass
 
