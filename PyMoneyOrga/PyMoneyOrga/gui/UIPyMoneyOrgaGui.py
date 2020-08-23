@@ -148,19 +148,9 @@ class Ui_PyMoneyOrgaGui(object):
 
         self.gridLayout_2.addWidget(self.buttonAddExpenses, 2, 0, 1, 1)
 
-        self.buttonAddIncome = QPushButton(self.centralwidget)
-        self.buttonAddIncome.setObjectName(u"buttonAddIncome")
-
-        self.gridLayout_2.addWidget(self.buttonAddIncome, 3, 0, 1, 1)
-
-        self.labelChooseAccount = QLabel(self.centralwidget)
-        self.labelChooseAccount.setObjectName(u"labelChooseAccount")
-
-        self.gridLayout_2.addWidget(self.labelChooseAccount, 0, 0, 1, 1)
-
         self.verticalSpacer = QSpacerItem(20, 400, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout_2.addItem(self.verticalSpacer, 4, 1, 1, 1)
+        self.gridLayout_2.addItem(self.verticalSpacer, 5, 1, 1, 1)
 
         self.gridLayout_4 = QGridLayout()
         self.gridLayout_4.setObjectName(u"gridLayout_4")
@@ -192,12 +182,6 @@ class Ui_PyMoneyOrgaGui(object):
 
         self.gridLayout_2.addLayout(self.gridLayout_6, 3, 1, 1, 1)
 
-        self.comboChooseAccount = QComboBox(self.centralwidget)
-        self.comboChooseAccount.addItem("")
-        self.comboChooseAccount.setObjectName(u"comboChooseAccount")
-
-        self.gridLayout_2.addWidget(self.comboChooseAccount, 0, 1, 1, 1)
-
         self.gridLayout_7 = QGridLayout()
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.label_2 = QLabel(self.centralwidget)
@@ -212,6 +196,27 @@ class Ui_PyMoneyOrgaGui(object):
 
 
         self.gridLayout_2.addLayout(self.gridLayout_7, 1, 1, 1, 1)
+
+        self.comboChooseAccount = QComboBox(self.centralwidget)
+        self.comboChooseAccount.addItem("")
+        self.comboChooseAccount.setObjectName(u"comboChooseAccount")
+
+        self.gridLayout_2.addWidget(self.comboChooseAccount, 0, 1, 1, 1)
+
+        self.buttonAddIncome = QPushButton(self.centralwidget)
+        self.buttonAddIncome.setObjectName(u"buttonAddIncome")
+
+        self.gridLayout_2.addWidget(self.buttonAddIncome, 3, 0, 1, 1)
+
+        self.labelChooseAccount = QLabel(self.centralwidget)
+        self.labelChooseAccount.setObjectName(u"labelChooseAccount")
+
+        self.gridLayout_2.addWidget(self.labelChooseAccount, 0, 0, 1, 1)
+
+        self.buttonUndo = QPushButton(self.centralwidget)
+        self.buttonUndo.setObjectName(u"buttonUndo")
+
+        self.gridLayout_2.addWidget(self.buttonUndo, 4, 0, 1, 1)
 
 
         self.gridLayout_9.addLayout(self.gridLayout_2, 0, 0, 1, 1)
@@ -230,8 +235,8 @@ class Ui_PyMoneyOrgaGui(object):
         self.statusbar.setObjectName(u"statusbar")
         PyMoneyOrgaGui.setStatusBar(self.statusbar)
 #if QT_CONFIG(shortcut)
-        self.labelChooseAccount.setBuddy(self.comboChooseAccount)
         self.labelAddExpenses.setBuddy(self.inputAddExpenses)
+        self.labelChooseAccount.setBuddy(self.comboChooseAccount)
 #endif // QT_CONFIG(shortcut)
         QWidget.setTabOrder(self.comboChooseAccount, self.inputAddExpenses)
         QWidget.setTabOrder(self.inputAddExpenses, self.inputDescriptionExpenses)
@@ -286,12 +291,16 @@ class Ui_PyMoneyOrgaGui(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabTableView), QCoreApplication.translate("PyMoneyOrgaGui", u"Table view", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabGraphicView), QCoreApplication.translate("PyMoneyOrgaGui", u"Graphical view", None))
         self.buttonAddExpenses.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New expenses", None))
-        self.buttonAddIncome.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New income", None))
-        self.labelChooseAccount.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Choose account", None))
-        self.comboChooseAccount.setItemText(0, QCoreApplication.translate("PyMoneyOrgaGui", u"NoAccountSaved", None))
-
         self.label_2.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Description", None))
         self.labelAddExpenses.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Amount", None))
+        self.comboChooseAccount.setItemText(0, QCoreApplication.translate("PyMoneyOrgaGui", u"NoAccountSaved", None))
+
+        self.buttonAddIncome.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"New income", None))
+        self.labelChooseAccount.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Choose account", None))
+#if QT_CONFIG(tooltip)
+        self.buttonUndo.setToolTip(QCoreApplication.translate("PyMoneyOrgaGui", u"<html><head/><body><p>Undo last transaction</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.buttonUndo.setText(QCoreApplication.translate("PyMoneyOrgaGui", u"Undo", None))
         self.menuFile.setTitle(QCoreApplication.translate("PyMoneyOrgaGui", u"File", None))
     # retranslateUi
 
