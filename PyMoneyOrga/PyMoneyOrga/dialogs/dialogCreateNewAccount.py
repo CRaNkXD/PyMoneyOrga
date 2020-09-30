@@ -59,7 +59,7 @@ class DialogCreateNewAccount(QtWidgets.QDialog, Ui_dialogCreateNewAccount):
             services_gui.show_info_msg_box(info_msg)
             return
 
-        balance = int(float(balance.replace(",","."))*100)
+        balance = int(float(balance.replace(",", "."))*100)
         currency = self.comboCurrency.currentText()
         services_account.add_acc(self.parent.database, acc_name, balance, currency)
 

@@ -17,7 +17,7 @@ class TestDatabaseSqlite(unittest.TestCase):
         tests if an account can be set by checking table columns
         """
         with self.database.get_session() as session:
-            self.database.add_acc(session, self.acc_name_1, 100)
+            self.database.add_acc(session, self.acc_name_1, 100, "EUR")
             self.database.commit(session)
             acc = self.database.get_acc(session, self.acc_name_1)
             self.assertEqual(acc.balance, 100)
@@ -28,8 +28,8 @@ class TestDatabaseSqlite(unittest.TestCase):
         columns of the first and the second entry
         """
         with self.database.get_session() as session:
-            self.database.add_acc(session, self.acc_name_1, 100)
-            self.database.add_acc(session, self.acc_name_2, 200)
+            self.database.add_acc(session, self.acc_name_1, 100, "EUR")
+            self.database.add_acc(session, self.acc_name_2, 200, "EUR")
             self.database.commit(session)
             acc_user2 = self.database.get_acc(session, self.acc_name_2)
             acc_user1 = self.database.get_acc(session, self.acc_name_1)
@@ -51,7 +51,7 @@ class TestDatabaseSqlite(unittest.TestCase):
         specified transactions in the right order with the specified amount
         """
         with self.database.get_session() as session:
-            self.database.add_acc(session, self.acc_name_1, 100)
+            self.database.add_acc(session, self.acc_name_1, 100, "EUR")
             self.database.commit(session)
             acc = self.database.get_acc(session, self.acc_name_1)
             acc.add_income(100, "income1")

@@ -4,7 +4,7 @@ from PyMoneyOrga.domain.account import Account
 
 class TestAccount(unittest.TestCase):
     def setUp(self):
-        self.user_account = Account("User", 100)
+        self.user_account = Account("User", 100, "EUR")
         return super().setUp()
 
     def test_add_income(self):

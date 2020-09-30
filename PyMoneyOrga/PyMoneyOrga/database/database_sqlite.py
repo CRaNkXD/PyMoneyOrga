@@ -10,7 +10,6 @@ from sqlalchemy import (
     Table,
 )
 from sqlalchemy.orm import relationship, sessionmaker, mapper, clear_mappers
-import datetime
 from contextlib import contextmanager
 
 from ..domain.account import Account, Transaction
@@ -167,7 +166,7 @@ class DatabaseSqlite(DatabaseInterface):
         self, session, acc_name, reverse=False, max_length=-1, offset=0
     ):
         """
-        returns a list of transactions from the specified account. 
+        returns a list of transactions from the specified account.
         max_length specifies the max length of the list.
         reverse specifies if the newest transactions will be listed first.
         if not existing [].

@@ -59,7 +59,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PyMoneyOrgaGui):
         self.actionExit.triggered.connect(self.close)
         self.buttonAddExpenses.clicked.connect(self.add_new_expenses)
         self.buttonAddIncome.clicked.connect(self.add_new_income)
-        self.buttonUndo.clicked.connect (self.undo_last_transaction)
+        self.buttonUndo.clicked.connect(self.undo_last_transaction)
         self.comboChooseAccount.currentTextChanged.connect(self.init_table_transactions)
         self.comboChooseAccount.currentTextChanged.connect(self.init_chart)
         self.checkShowAmount.stateChanged.connect(
